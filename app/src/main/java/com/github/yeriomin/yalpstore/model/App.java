@@ -2,6 +2,8 @@ package com.github.yeriomin.yalpstore.model;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.text.TextUtils;
 
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class App implements Comparable<App> {
+public class App implements Comparable<App>, Parcelable {
 
     private PackageInfo packageInfo;
 
@@ -57,6 +59,84 @@ public class App implements Comparable<App> {
             this.setPermissions(Arrays.asList(packageInfo.requestedPermissions));
         }
     }
+
+    public void writeToParcel(Parcel out, int flags) {
+        out.writeParcelable(packageInfo, flags);
+        out.writeString(displayName);
+        out.writeString(versionName);
+        out.writeInt(versionCode);
+        out.writeInt(offerType);
+        out.writeString(updated);
+        out.writeLong(size);
+        out.writeString(installs);
+        out.writeParcelable(rating, flags);
+        out.writeString(iconUrl);
+        out.writeString(changes);
+        out.writeString(developerName);
+        out.writeString(description);
+        out.writeStringList(new ArrayList<>(permissions));
+        out.writeInt(isInstalled ? 1 : 0);
+        out.writeInt(isFree ? 1 : 0);
+        out.writeStringList(screenshotUrls);
+        out.writeParcelable(userReview, flags);
+        out.writeParcelableArray((App[]) similarApps.toArray(), flags);
+        out.writeParcelableArray((App[]) usersAlsoInstalledApps.toArray(), flags);
+        out.writeString(categoryId);
+        out.writeString(price);
+        out.writeInt(containsAds ? 1 : 0);
+        out.writeStringList(new ArrayList<>(dependencies));
+        out.writeMap(offerDetails);
+        out.writeInt(system ? 1 : 0);
+        out.writeInt(inPlayStore ? 1 : 0);
+    }
+
+    protected App(Parcel in) {
+        packageInfo = in.readParcelable(PackageInfo.class.getClassLoader());
+        displayName = in.readString();
+        versionName = in.readString();
+        versionCode = in.readInt();
+        offerType = in.readInt();
+        updated = in.readString();
+        size = in.readLong();
+        installs = in.readString();
+        rating = in.readParcelable(Rating.class.getClassLoader());
+        iconUrl = in.readString();
+        changes = in.readString();
+        developerName = in.readString();
+        description = in.readString();
+        List<String> permissions = new ArrayList<>();
+        in.readStringList(permissions);
+        this.permissions.addAll(permissions);
+        isInstalled = in.readInt() != 0;
+        isFree = in.readInt() != 0;
+        in.readStringList(screenshotUrls);
+        userReview = in.readParcelable(Review.class.getClassLoader());
+        similarApps = Arrays.asList((App[]) in.readParcelableArray(App.class.getClassLoader()));
+        usersAlsoInstalledApps = Arrays.asList((App[]) in.readParcelableArray(App.class.getClassLoader()));
+        categoryId = in.readString();
+        price = in.readString();
+        containsAds = in.readInt() != 0;
+        List<String> dependencies = new ArrayList<>();
+        in.readStringList(dependencies);
+        this.dependencies.addAll(dependencies);
+        offerDetails.putAll(in.readHashMap(HashMap.class.getClassLoader()));
+        system = in.readInt() != 0;
+        inPlayStore = in.readInt() != 0;
+    }
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<App> CREATOR = new Parcelable.Creator<App>() {
+        public App createFromParcel(Parcel in) {
+            return new App(in);
+        }
+
+        public App[] newArray(int size) {
+            return new App[size];
+        }
+    };
 
     public PackageInfo getPackageInfo() {
         return packageInfo;
