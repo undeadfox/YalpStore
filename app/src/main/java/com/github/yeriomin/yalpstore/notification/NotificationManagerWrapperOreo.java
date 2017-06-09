@@ -28,6 +28,6 @@ public class NotificationManagerWrapperOreo extends NotificationManagerWrapperJe
 
     @Override
     protected Notification.Builder getBuilder(Intent intent, String title, String message) {
-        return super.getBuilder(intent, title, message).setChannel(BuildConfig.APPLICATION_ID);
+        return super.getBuilder(intent, title, message).setChannelId(BuildConfig.APPLICATION_ID);
     }
 }
