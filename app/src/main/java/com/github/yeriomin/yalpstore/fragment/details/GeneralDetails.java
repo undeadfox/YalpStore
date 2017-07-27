@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.github.yeriomin.yalpstore.CategoryManager;
 import com.github.yeriomin.yalpstore.DetailsActivity;
-import com.github.yeriomin.yalpstore.LoadIconTask;
+import com.github.yeriomin.yalpstore.LoadImageTask;
 import com.github.yeriomin.yalpstore.R;
 import com.github.yeriomin.yalpstore.model.App;
 
@@ -41,7 +41,7 @@ public class GeneralDetails extends Abstract {
     }
 
     private void drawAppBadge(App app) {
-        new LoadIconTask((ImageView) activity.findViewById(R.id.icon)).execute(app.getIconInfo());
+        new LoadImageTask((ImageView) activity.findViewById(R.id.icon)).execute(app.getIconInfo());
 
         setText(R.id.displayName, app.getDisplayName());
         setText(R.id.packageName, app.getPackageName());
@@ -111,10 +111,10 @@ public class GeneralDetails extends Abstract {
         }
         try {
             PackageInfo info = activity.getPackageManager().getPackageInfo(app.getPackageName(), 0);
-            if (info.versionCode == app.getVersionCode()) {
+            String currentVersion = info.versionName;
+            if (info.versionCode == app.getVersionCode() || null == currentVersion) {
                 return;
             }
-            String currentVersion = info.versionName;
             String newVersion = versionName;
             if (currentVersion.equals(newVersion)) {
                 currentVersion += " (" + info.versionCode;

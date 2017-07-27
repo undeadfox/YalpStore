@@ -90,12 +90,12 @@ public class UpdatableAppsTask extends GoogleApiAsyncTask {
         // Comparing versions and building updatable apps list
         for (App appFromMarket: appsFromPlayStore) {
             String packageName = appFromMarket.getPackageName();
-            if (TextUtils.isEmpty(packageName)) {
+            if (TextUtils.isEmpty(packageName) || !installedApps.containsKey(packageName)) {
                 continue;
             }
             App installedApp = installedApps.get(packageName);
             appFromMarket = addInstalledAppInfo(appFromMarket, installedApp);
-            if (null != installedApp && installedApp.getVersionCode() < appFromMarket.getVersionCode()) {
+            if (installedApp.getVersionCode() < appFromMarket.getVersionCode()) {
                 installedApps.remove(packageName);
                 updatableApps.add(appFromMarket);
             } else {
@@ -103,6 +103,7 @@ public class UpdatableAppsTask extends GoogleApiAsyncTask {
             }
         }
         return null;
+//        throw new RuntimeException("aaaaaa");
     }
 
     @Override
