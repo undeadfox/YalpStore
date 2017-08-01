@@ -54,7 +54,7 @@ public class Downloader {
 
     static private boolean shouldDownloadDelta(App app, AndroidAppDeliveryData deliveryData) {
         File currentApk = InstalledApkCopier.getCurrentApk(app);
-        return app.getVersionCode() > app.getInstalledVersionCode()
+        return false && app.getVersionCode() > app.getInstalledVersionCode()
             && deliveryData.hasPatchData()
             && null != currentApk
             && currentApk.exists()
