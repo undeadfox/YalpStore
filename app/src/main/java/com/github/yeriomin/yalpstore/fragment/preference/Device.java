@@ -6,8 +6,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.github.yeriomin.playstoreapi.PropertiesDeviceInfoProvider;
 import com.github.yeriomin.yalpstore.OnListPreferenceChangeListener;
 import com.github.yeriomin.yalpstore.Paths;
 import com.github.yeriomin.yalpstore.PlayStoreApiAuthenticator;
@@ -16,10 +18,10 @@ import com.github.yeriomin.yalpstore.R;
 import com.github.yeriomin.yalpstore.SpoofDeviceManager;
 import com.github.yeriomin.yalpstore.Util;
 import com.github.yeriomin.yalpstore.YalpStoreActivity;
-import com.github.yeriomin.yalpstore.bugreport.BugReportSenderFtp;
 import com.github.yeriomin.yalpstore.bugreport.BugReportService;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Device extends List {
@@ -49,9 +51,12 @@ public class Device extends List {
         OnListPreferenceChangeListener listener = new OnListPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                boolean result = super.onPreferenceChange(preference, newValue);
+                if (!TextUtils.isEmpty((String) newValue) && !isDeviceDefinitionValid((String) newValue)) {
+                    Toast.makeText(activity, R.string.error_invalid_device_definition, Toast.LENGTH_LONG).show();
+                    return false;
+                }
                 showLogOutDialog();
-                return result;
+                return super.onPreferenceChange(preference, newValue);
             }
         };
         listener.setDefaultLabel(activity.getString(R.string.pref_device_to_pretend_to_be_default));
@@ -68,6 +73,13 @@ public class Device extends List {
             activity.getString(R.string.pref_device_to_pretend_to_be_default)
         );
         return devices;
+    }
+
+    private boolean isDeviceDefinitionValid(String spoofDevice) {
+        PropertiesDeviceInfoProvider deviceInfoProvider = new PropertiesDeviceInfoProvider();
+        deviceInfoProvider.setProperties(new SpoofDeviceManager(activity).getProperties(spoofDevice));
+        deviceInfoProvider.setLocaleString(Locale.getDefault().toString());
+        return deviceInfoProvider.isValid();
     }
 
     private AlertDialog showRequestDialog(boolean logOut) {
@@ -99,7 +111,7 @@ public class Device extends List {
     private void send() {
         Intent intentBugReport = new Intent(activity.getApplicationContext(), BugReportService.class);
         intentBugReport.setAction(BugReportService.ACTION_SEND_FTP);
-        intentBugReport.putExtra(BugReportService.INTENT_MESSAGE, "Sent from device definition request dialog");
+        intentBugReport.putExtra(BugReportService.INTENT_MESSAGE, R.string.sent_from_device_definition_dialog);
         activity.startService(intentBugReport);
     }
 

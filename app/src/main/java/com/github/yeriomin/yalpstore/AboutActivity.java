@@ -1,12 +1,9 @@
 package com.github.yeriomin.yalpstore;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.ClipboardManager;
@@ -42,23 +39,6 @@ public class AboutActivity extends YalpStoreActivity {
                 return "bitcoin:" + super.getUri(v) + "?label=YalpStore";
             }
         });
-        if (hasPermission()) {
-            checkForUpdate();
-        }
-    }
-
-    private void checkForUpdate() {
-        SelfUpdateChecker checker = new SelfUpdateChecker(this);
-        checker.setButton((TextView) findViewById(R.id.update));
-        checker.execute();
-    }
-
-    private boolean hasPermission() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            return checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED;
-        }
-        return true;
     }
 
     private class CopyToClipboardListener implements View.OnClickListener {
@@ -66,7 +46,7 @@ public class AboutActivity extends YalpStoreActivity {
         @Override
         public void onClick(View v) {
             ((ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE)).setText(((TextView) v).getText());
-            Toast.makeText(v.getContext(), R.string.about_copied_to_clipboard, Toast.LENGTH_SHORT).show();
+            Toast.makeText(v.getContext().getApplicationContext(), R.string.about_copied_to_clipboard, Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -9,7 +9,37 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.preference.PreferenceManager;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class YalpStoreApplication extends Application {
+
+    private boolean isBackgroundUpdating = false;
+    private List<String> pendingUpdates = new ArrayList<>();
+
+    public boolean isBackgroundUpdating() {
+        return isBackgroundUpdating;
+    }
+
+    public void setBackgroundUpdating(boolean backgroundUpdating) {
+        isBackgroundUpdating = backgroundUpdating;
+    }
+
+    public void addPendingUpdate(String packageName) {
+        pendingUpdates.add(packageName);
+    }
+
+    public void removePendingUpdate(String packageName) {
+        pendingUpdates.remove(packageName);
+        if (pendingUpdates.isEmpty()) {
+            isBackgroundUpdating = false;
+            sendBroadcast(new Intent(UpdateAllReceiver.ACTION_UPDATE_COMPLETE));
+        }
+    }
+
+    public void clearPendingUpdates() {
+        pendingUpdates.clear();
+    }
 
     @Override
     public void onCreate() {

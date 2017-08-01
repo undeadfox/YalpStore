@@ -16,6 +16,7 @@
     <string name="list_incompatible">incompatible</string>
     <string name="list_check_updates">Check for updates</string>
     <string name="list_update_all">Update all</string>
+    <string name="list_updating">Updating…</string>
     <string name="list_app_has_ads">has ads</string>
     <string name="list_app_no_ads">no ads</string>
     <string name="list_app_depends_on_gsf">depends on GSF</string>
@@ -84,6 +85,8 @@
     <string name="error_not_purchased">The app does not seem to be purchased.\nRedirect to its Play Store web page?</string>
     <string name="error_downloads_directory_not_writable">Downloads directory could not be created or is not writable.</string>
     <string name="error_token_dispenser_problem">Could not log in without an account. Try using your own account.</string>
+    <string name="error_invalid_device_definition">Device definition rejected.</string>
+    <string name="error_could_not_download">Could not download.</string>
     <string name="details_category">"Category: %1$s"</string>
     <string name="details_developer">"Developer: %1$s"</string>
     <string name="details_installs">"%1$s ↓"</string>
@@ -115,6 +118,7 @@
     <string name="details_review_dialog_review_comment_hint">comment here</string>
     <string name="details_review_dialog_fields_optional">You can leave everything blank.</string>
     <string name="details_to_play_store">View in Play Store</string>
+    <string name="details_video">Video</string>
     <string name="details_share">Share</string>
     <string name="details_signature_mismatch">The new version is signed with a different key to the old one. To install the new version, the old one must be uninstalled first. Please do this and try again. (Note that uninstalling will erase any internal data stored by the application)</string>
     <string name="details_depends_on">"Depends on: %1$s"</string>

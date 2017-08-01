@@ -103,7 +103,6 @@ public class UpdatableAppsTask extends GoogleApiAsyncTask {
             }
         }
         return null;
-//        throw new RuntimeException("aaaaaa");
     }
 
     @Override
@@ -133,7 +132,13 @@ public class UpdatableAppsTask extends GoogleApiAsyncTask {
 
     private List<App> getAppsFromPlayStore(Collection<String> packageNames) throws IOException {
         if (explicitCheck) {
-            appsFromPlayStore = new PlayStoreApiWrapper(this.context).getDetails(new ArrayList<>(packageNames));
+            appsFromPlayStore.clear();
+            boolean builtInAccount = PreferenceActivity.getBoolean(context, PreferenceActivity.PREFERENCE_APP_PROVIDED_EMAIL);
+            for (App app: new PlayStoreApiWrapper(context).getDetails(new ArrayList<>(packageNames))) {
+                if (!builtInAccount || app.isFree()) {
+                    appsFromPlayStore.add(app);
+                }
+            }
         }
         return appsFromPlayStore;
     }
