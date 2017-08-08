@@ -120,15 +120,7 @@ Play ストアのウェブページにリダイレクトしますか?"</string>
 <string name="pref_delete_apk_after_install_summary_on">"インストール後に .apks は削除されます"</string>
 <string name="pref_delete_apk_after_install">"インストール後に .apk を削除"</string>
 <string name="dialog_title_application_crashed">"申し訳ありません。Yalp Store がクラッシュしました"</string>
-<string name="dialog_message_application_crashed">"エラーデータを開発者に送信すると、この解決に役立ちます。 OK をクリックすると、デフォルトのメールアプリ表示されて、開発者にメールを送信できます。
-
-エラーが発生したときにしていたことを説明してください。
-
-個人的または機密情報は収集されません。疑う場合は、メールの内容を確認してください。"</string>
 <string name="details_to_play_store">"Play ストアで表示"</string>
-<string name="about_self_update_checking">"…確認中"</string>
-<string name="about_self_update_available">"…0.%1$d 利用できます"</string>
-<string name="about_self_update_unavailable">"…更新は見つかりません"</string>
 <string name="action_categories">"カテゴリー"</string>
 <string name="list_update_all">"すべて更新"</string>
 <string name="notification_installation_complete">"更新をインストールしました。"</string>
@@ -244,4 +236,22 @@ Google Play ストアでは、任意のバージョンのアプリをダウン�
 <string name="details_developer">"開発元: %1$s"</string>
 <string name="pref_background_update_wifi_only">"Wi-Fi のみを使用"</string>
 <string name="about_bitcoin_label">"Bitcoin:"</string>
+<string name="action_bug_report">"問題を報告"</string>
+<string name="dialog_title_spoof_request">"リクエスト"</string>
+<string name="dialog_message_spoof_request">"デバイスの情報を含むバグレポートを送信するなどで、デバイスのなりすましが可能です。 定義を正確かつ最新にするには、OK をタップして、デバイス情報を Yalp Store 開発者に送信してください。"</string>
+<string name="pref_device_to_pretend_to_be_notice">"デバイス定義を %1$s に入れると、このリストにデバイス定義が表示されます"</string>
+<string name="pref_no_images">"Wi-Fi でのみ画像をダウンロード"</string>
+<string name="pref_no_images_summary_off">"常に画像をすぐにダウンロードします"</string>
+<string name="pref_no_images_summary_on">"Wi-Fi でのみ画像をダウンロードします"</string>
+<string name="bug_report_hint_message">"問題の詳細な説明"</string>
+<string name="bug_report_hint_identification">"あなたのメールアドレス/名前/その他 (任意)"</string>
+<string name="bug_report_explanation_content">"お使いのデバイスに関する情報、Yalp Store のログ、いくつかの Yalp Store の設定はメッセージに自動的に追加されます。 個人情報または機密情報は収集されません。"</string>
+<string name="bug_report_explanation_crash">"開発者にバグレポートを送ることで、この問題を解決する手助けができます。 エラーが発生したときに何をしようとしていたのかを説明して、OK をタップして送信してください。"</string>
+<string name="bug_report_explanation_bug_report">"問題を説明してください。 可能であれば特定してください。 特定のアプリで問題が発生しますか? それはいつも起こりますか、それとも時々ですか? どのようにそれを再現することができますか?"</string>
+<string name="thank_you">"ありがとうございます"</string>
+<string name="list_updating">"更新中…"</string>
+<string name="error_invalid_device_definition">"デバイス定義が拒否されました。"</string>
+<string name="details_video">"ビデオ"</string>
+<string name="error_could_not_download">"ダウンロードできませんでした。"</string>
+<string name="first_login_message">"To use your own account choose Log out in the menu"</string>
 </resources>
