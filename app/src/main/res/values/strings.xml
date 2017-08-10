@@ -5,7 +5,6 @@
     <string name="about_logged_in">You are logged in as:</string>
     <string name="about_copied_to_clipboard">Copied to clipboard</string>
     <string name="list_line_2_updatable">"Updated on %1$s"</string>
-    <string name="list_line_2_search">"%1$s ↓, %2$.1f★, %3$s"</string>
     <string name="list_has_update">Updatable</string>
     <string name="list_no_update">Already up to date</string>
     <string name="list_empty_updates">No apps need to be updated</string>
@@ -229,4 +228,13 @@
     <string name="bug_report_explanation_bug_report">Please describe the issue. Be specific if possible. Does the problem occur with a specific app? Does it happen all the time or only sometimes? How can it be reproduced?</string>
     <string name="thank_you">Thank you</string>
     <string name="first_login_message">To use your own account choose "Log out" in the menu</string>
+    <string name="early_access">Early access</string>
+    <string name="testing_program_opt_in">join</string>
+    <string name="testing_program_opt_out">leave</string>
+    <string name="testing_program_section_opted_in_message">"App updates will include beta versions. If you leave this app's beta program, you will no longer get beta updates."</string>
+    <string name="testing_program_section_opted_in_propagating_message">"In a few minutes, you'll be added to the beta program. You can then update to the beta version of this app, if available."</string>
+    <string name="testing_program_section_opted_in_title">"You're a beta tester"</string>
+    <string name="testing_program_section_opted_out_message">"Try new features before they're made public. Give your feedback directly to the developer."</string>
+    <string name="testing_program_section_opted_out_propagating_message">It can take a few minutes to remove you from the beta program.</string>
+    <string name="testing_program_section_opted_out_title">Become a beta tester</string>
 </resources>

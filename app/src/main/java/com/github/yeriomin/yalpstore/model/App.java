@@ -43,6 +43,10 @@ public class App implements Comparable<App> {
     private boolean system;
     private boolean inPlayStore;
     private Map<String, String> relatedLinks = new HashMap<>();
+    private boolean earlyAccess;
+    private boolean testingProgramAvailable;
+    private boolean testingProgramOptedIn;
+    private String testingProgramEmail;
 
     public App() {
         this.packageInfo = new PackageInfo();
@@ -271,6 +275,38 @@ public class App implements Comparable<App> {
 
     public Map<String, String> getRelatedLinks() {
         return relatedLinks;
+    }
+
+    public boolean isEarlyAccess() {
+        return earlyAccess;
+    }
+
+    public void setEarlyAccess(boolean earlyAccess) {
+        this.earlyAccess = earlyAccess;
+    }
+
+    public boolean isTestingProgramAvailable() {
+        return testingProgramAvailable;
+    }
+
+    public void setTestingProgramAvailable(boolean testingProgramAvailable) {
+        this.testingProgramAvailable = testingProgramAvailable;
+    }
+
+    public boolean isTestingProgramOptedIn() {
+        return testingProgramOptedIn;
+    }
+
+    public void setTestingProgramOptedIn(boolean testingProgramOptedIn) {
+        this.testingProgramOptedIn = testingProgramOptedIn;
+    }
+
+    public String getTestingProgramEmail() {
+        return testingProgramEmail;
+    }
+
+    public void setTestingProgramEmail(String testingProgramEmail) {
+        this.testingProgramEmail = testingProgramEmail;
     }
 
     @Override
