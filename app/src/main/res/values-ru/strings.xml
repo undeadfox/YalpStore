@@ -6,7 +6,6 @@
     <string name="about_logged_in">Ваш текущий аккаунт:</string>
     <string name="about_copied_to_clipboard">Скопировано в буфер обмена</string>
     <string name="list_line_2_updatable">"Обновлено %1$s"</string>
-    <string name="list_line_2_search">"%1$s ↓, %2$.1f★, %3$s"</string>
     <string name="list_has_update">Есть обновления</string>
     <string name="list_no_update">Нет обновлений</string>
     <string name="list_empty_updates">Обновлений нет</string>
@@ -138,6 +137,7 @@
     <string name="activity_title_search_publisher">"Приложения от %1$s"</string>
     <string name="notification_installation_complete">Установлено обновление.</string>
     <string name="notification_installation_failed">Не удалось установить обновление.</string>
+    <string name="notification_not_privileged">Нет разрешения на установку</string>
     <string name="notification_download_starting">Скачивание начинается</string>
     <string name="notification_download_progress">"%1$s из %2$s скачано"</string>
     <string name="notification_download_complete">Готово. Коснитесь чтобы установить.</string>
