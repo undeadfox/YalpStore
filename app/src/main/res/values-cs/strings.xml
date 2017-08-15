@@ -47,9 +47,6 @@ Klikněte na \"Vytvořit heslo\" pro přesměrování na stránky pro vytvořen�
 Přesměrovat na její stránku v obchodu Play?"</string>
 <string name="error_downloads_directory_not_writable">"Složka stahování nemohla být vytvořena nebo je pouze pro čtení."</string>
 <string name="error_token_dispenser_problem">"Nelze se přihlásit uvedeným účtem. Zkuste použít svůj účet."</string>
-<string name="details_installs">"%1$s ↓"</string>
-<string name="details_rating">"%1$.1f★"</string>
-<string name="details_rating_specific">"%1$d★ %2$d"</string>
 <string name="details_updated">"Aktualizováno %1$s"</string>
 <string name="details_size">"Velikost apk %1$s"</string>
 <string name="details_description">"Popis:"</string>
@@ -185,8 +182,8 @@ Mějte na paměti, že stahování starších verzí aplikací není podporován
 <string name="details_could_not_copy_apk">"Nelze zkopírovat apk"</string>
 <string name="action_make_system">"Převést na systémovou aplikaci"</string>
 <string name="action_make_normal">"Převést na normální aplikaci"</string>
-<string name="list_app_system">"Systémová aplikace."</string>
-<string name="list_app_exists_in_play_store">"Dosupné na obchodě Play."</string>
+<string name="list_app_system">"Systémová aplikace"</string>
+<string name="list_app_exists_in_play_store">"Dosupné na obchodě Play"</string>
 <string name="activity_title_updates_only">"Aktualizace"</string>
 <string name="activity_title_updates_and_other_apps">"Vaše aplikace"</string>
 <string name="pref_category_updates_page">"Stránka aktualizací"</string>
@@ -254,13 +251,14 @@ Pokračovat?"</string>
 <string name="details_video">"Video"</string>
 <string name="error_could_not_download">"Nelze stáhnout."</string>
 <string name="first_login_message">"To use your own account choose Log out in the menu"</string>
-<string name="early_access">Předběžný přístup</string>
-<string name="testing_program_opt_in">zapojit se</string>
-<string name="testing_program_opt_out">odejít</string>
-<string name="testing_program_section_opted_in_message">Aktualizace aplikace budou zahrnovat beta verze. Pokud program testování beta verze opustíte, aktualizace beta verze již nebudete dostávat.</string>
-<string name="testing_program_section_opted_in_propagating_message">Za okamžik budete přidáni do programu testování beta verze. Poté si aplikaci budete moci aktualizovat na beta verzi (pokud je aktualizace k dispozici).</string>
-<string name="testing_program_section_opted_in_title">Jste tester beta verze</string>
-<string name="testing_program_section_opted_out_message">Vyzkoušejte nové funkce, ještě než budou publikovány. Odešlete zpětnou vazbu přímo vývojáři.</string>
-<string name="testing_program_section_opted_out_propagating_message">Opuštění programu testování beta verze může chvíli trvat.</string>
-<string name="testing_program_section_opted_out_title">Staňte se testerem beta verze</string>
+<string name="early_access">"Předběžný přístup"</string>
+<string name="testing_program_opt_in">"zapojit se"</string>
+<string name="testing_program_opt_out">"odejít"</string>
+<string name="testing_program_section_opted_in_message">"Aktualizace aplikace budou zahrnovat beta verze. Pokud program testování beta verze opustíte, aktualizace beta verze již nebudete dostávat."</string>
+<string name="testing_program_section_opted_in_propagating_message">"Za okamžik budete přidáni do programu testování beta verze. Poté si aplikaci budete moci aktualizovat na beta verzi (pokud je aktualizace k dispozici)."</string>
+<string name="testing_program_section_opted_in_title">"Jste tester beta verze"</string>
+<string name="testing_program_section_opted_out_message">"Vyzkoušejte nové funkce, ještě než budou publikovány. Odešlete zpětnou vazbu přímo vývojáři."</string>
+<string name="testing_program_section_opted_out_propagating_message">"Opuštění programu testování beta verze může chvíli trvat."</string>
+<string name="testing_program_section_opted_out_title">"Staňte se testerem beta verze"</string>
+<string name="notification_not_privileged">"Install permission not granted"</string>
 </resources>

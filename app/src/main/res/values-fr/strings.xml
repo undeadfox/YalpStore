@@ -42,9 +42,6 @@
 <string name="error_not_purchased">"Cette application ne semble pas avoir été achetée. Voir la page sur le Play Store ?"</string>
 <string name="error_downloads_directory_not_writable">"Le dossier des téléchargement n\'a pas pu être créé ou n\'a pas d\'accès en écriture"</string>
 <string name="error_token_dispenser_problem">"Impossible de se connecter sans compte. Essayez avec le vôtre."</string>
-<string name="details_installs">"%1$s ↓"</string>
-<string name="details_rating">"%1$.1f★"</string>
-<string name="details_rating_specific">"%1$d★ %2$d"</string>
 <string name="details_updated">"Mis à jour : %1$s"</string>
 <string name="details_size">"Taille de %1$s "</string>
 <string name="details_description">"Description :"</string>
@@ -178,8 +175,8 @@
 <string name="details_could_not_copy_apk">"Impossible de copier l\'apk"</string>
 <string name="action_make_system">"Convertir en application système"</string>
 <string name="action_make_normal">"Convertir en application utilisateur"</string>
-<string name="list_app_system">"Application système."</string>
-<string name="list_app_exists_in_play_store">"Disponible dans le Play Store."</string>
+<string name="list_app_system">"Application système"</string>
+<string name="list_app_exists_in_play_store">"Disponible dans le Play Store"</string>
 <string name="activity_title_updates_only">"Mises à jour"</string>
 <string name="activity_title_updates_and_other_apps">"Vos applications"</string>
 <string name="pref_category_updates_page">"Page de mise à jour"</string>
@@ -231,13 +228,14 @@
 <string name="details_video">"Vidéo"</string>
 <string name="error_could_not_download">"Téléchargement impossible"</string>
 <string name="first_login_message">"To use your own account choose Log out in the menu"</string>
-<string name="early_access">Accès anticipé</string>
-<string name="testing_program_opt_in">rejoindre</string>
-<string name="testing_program_opt_out">quitter</string>
+<string name="early_access">"Accès anticipé"</string>
+<string name="testing_program_opt_in">"rejoindre"</string>
+<string name="testing_program_opt_out">"quitter"</string>
 <string name="testing_program_section_opted_in_message">"Les mises à jour de l'application comprendront les versions bêta. Si vous quittez le programme bêta de cette application, vous ne recevrez plus les mises à jour bêta."</string>
-<string name="testing_program_section_opted_in_propagating_message">Dans quelques minutes, vous serez inscrit au programme bêta. Vous pourrez ensuite passer à la version bêta de cette application, le cas échéant.</string>
-<string name="testing_program_section_opted_in_title">Vous êtes testeur bêta</string>
+<string name="testing_program_section_opted_in_propagating_message">"Dans quelques minutes, vous serez inscrit au programme bêta. Vous pourrez ensuite passer à la version bêta de cette application, le cas échéant."</string>
+<string name="testing_program_section_opted_in_title">"Vous êtes testeur bêta"</string>
 <string name="testing_program_section_opted_out_message">"Essayez de nouvelles fonctionnalités avant qu'elles ne soient rendues publiques. Envoyez vos commentaires directement au développeur."</string>
-<string name="testing_program_section_opted_out_propagating_message">Votre désinscription du programme bêta peut prendre quelques minutes.</string>
-<string name="testing_program_section_opted_out_title">Devenir testeur bêta</string>
+<string name="testing_program_section_opted_out_propagating_message">"Votre désinscription du programme bêta peut prendre quelques minutes."</string>
+<string name="testing_program_section_opted_out_title">"Devenir testeur bêta"</string>
+<string name="notification_not_privileged">"Install permission not granted"</string>
 </resources>

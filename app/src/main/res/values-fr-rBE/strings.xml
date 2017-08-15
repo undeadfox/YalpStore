@@ -46,9 +46,6 @@ Choisissez  « créer un mot de passe » pour être redirigé vers la page de 
 <string name="error_not_purchased">"Cette application ne semble pas avoir été  achetée. Visiter sa page du Play Store ?"</string>
 <string name="error_downloads_directory_not_writable">"Le dossier de téléchargement n'a pas été créé ou n'est pas accessible en écriture."</string>
 <string name="error_token_dispenser_problem">"Impossible de se connecter sans compte. Essayez avec votre propre compte."</string>
-<string name="details_installs">"%1$s"</string>
-<string name="details_rating">"%1$.1f★"</string>
-<string name="details_rating_specific">"%1$d★ %2$d"</string>
 <string name="details_updated">"%1$s mis à jour"</string>
 <string name="details_size">"Taille de l'apk %1$s"</string>
 <string name="details_description">"Description :"</string>
@@ -253,4 +250,14 @@ Poursuivre ?"</string>
 <string name="details_video">"Vidéo"</string>
 <string name="error_could_not_download">"Téléchargement impossible"</string>
 <string name="first_login_message">"To use your own account choose Log out in the menu"</string>
+<string name="early_access">"Early access"</string>
+<string name="testing_program_opt_in">"join"</string>
+<string name="testing_program_opt_out">"leave"</string>
+<string name="testing_program_section_opted_in_message">"App updates will include beta versions. If you leave this app's beta program, you will no longer get beta updates."</string>
+<string name="testing_program_section_opted_in_propagating_message">"In a few minutes, you'll be added to the beta program. You can then update to the beta version of this app, if available."</string>
+<string name="testing_program_section_opted_in_title">"You're a beta tester"</string>
+<string name="testing_program_section_opted_out_message">"Try new features before they're made public. Give your feedback directly to the developer."</string>
+<string name="testing_program_section_opted_out_propagating_message">"It can take a few minutes to remove you from the beta program."</string>
+<string name="testing_program_section_opted_out_title">"Become a beta tester"</string>
+<string name="notification_not_privileged">"Install permission not granted"</string>
 </resources>
