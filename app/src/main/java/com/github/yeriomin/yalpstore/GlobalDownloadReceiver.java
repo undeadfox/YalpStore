@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.github.yeriomin.yalpstore.model.App;
 import com.github.yeriomin.yalpstore.notification.NotificationManagerWrapper;
@@ -39,7 +38,7 @@ public class GlobalDownloadReceiver extends BroadcastReceiver {
             state.setSuccessful(downloadId);
         } else {
             String error = dm.getError(downloadId);
-            Toast.makeText(context.getApplicationContext(), error, Toast.LENGTH_LONG).show();
+            ContextUtil.toastLong(context.getApplicationContext(), error);
             notificationManager.show(new Intent(), app.getDisplayName(), error);
         }
 
@@ -101,7 +100,7 @@ public class GlobalDownloadReceiver extends BroadcastReceiver {
             app.getDisplayName(),
             context.getString(notificationStringId)
         );
-        Toast.makeText(context.getApplicationContext(), context.getString(toastStringId, app.getDisplayName()), Toast.LENGTH_LONG).show();
+        ContextUtil.toast(context.getApplicationContext(), toastStringId, app.getDisplayName());
     }
 
     private boolean needToInstallUpdates() {

@@ -242,7 +242,7 @@
 <string name="bug_report_explanation_crash">"يمكنك المساعدة في إصلاح المشكلة بإرسال تقرير خطأ إلى المطور. من فضلك قم بوصف ما كنت تقوم به حين حدثت المشكلة ثم اضغط \"موافق\" للإرسال."</string>
 <string name="bug_report_explanation_bug_report">"فضلا قم بوصف المشكلة. كن محددا قم المستطاع. هل تحدث المشكلة مع تطبيق معين؟ هل تحدث دائما أم أحيانا؟ كيف يمكن إعادة انتاجها؟"</string>
 <string name="thank_you">"شكرا لك"</string>
-<string name="list_updating">"جاري التحديث..."</string>
+<string name="list_updating">"جاري التحديث…"</string>
 <string name="error_invalid_device_definition">"تم رفض تعريف الجهاز."</string>
 <string name="details_video">"فيديو"</string>
 <string name="error_could_not_download">"لم يمكن التحميل."</string>
@@ -257,4 +257,5 @@
 <string name="testing_program_section_opted_out_propagating_message">"قد تستغرق إزالتك من البرنامج التجريبي بضع دقائق."</string>
 <string name="testing_program_section_opted_out_title">"الانضمام إلى مختبِري الإصدار التجريبي"</string>
 <string name="notification_not_privileged">"Install permission not granted"</string>
+<string name="about_paypal_label">"التبرع"</string>
 </resources>

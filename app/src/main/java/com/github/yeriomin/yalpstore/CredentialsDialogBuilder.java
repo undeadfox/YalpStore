@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.github.yeriomin.playstoreapi.AuthException;
 import com.github.yeriomin.playstoreapi.GooglePlayException;
@@ -31,14 +30,6 @@ abstract public class CredentialsDialogBuilder {
     }
 
     abstract public Dialog show();
-
-    static protected void toast(Context c, int stringId, String... stringArgs) {
-        Toast.makeText(
-            c.getApplicationContext(),
-            c.getString(stringId, (Object[]) stringArgs),
-            Toast.LENGTH_LONG
-        ).show();
-    }
 
     abstract protected class CheckCredentialsTask extends GoogleApiAsyncTask {
 
@@ -79,10 +70,10 @@ abstract public class CredentialsDialogBuilder {
             super.processIOException(e);
             if (e instanceof TokenDispenserException) {
                 e.getCause().printStackTrace();
-                toast(context, R.string.error_token_dispenser_problem);
+                ContextUtil.toast(context, R.string.error_token_dispenser_problem);
             } else if (e instanceof GooglePlayException && ((GooglePlayException) e).getCode() == 500) {
                 PreferenceManager.getDefaultSharedPreferences(context).edit().putString(PreferenceActivity.PREFERENCE_BACKGROUND_UPDATE_INTERVAL, "-1").commit();
-                toast(context, R.string.error_invalid_device_definition);
+                ContextUtil.toast(context, R.string.error_invalid_device_definition);
                 context.startActivity(new Intent(context, PreferenceActivity.class));
             }
         }
@@ -94,7 +85,7 @@ abstract public class CredentialsDialogBuilder {
             } else if (null != e.getTwoFactorUrl()) {
                 getTwoFactorAuthDialog().show();
             } else {
-                toast(context, R.string.error_incorrect_password);
+                ContextUtil.toast(context, R.string.error_incorrect_password);
             }
         }
 

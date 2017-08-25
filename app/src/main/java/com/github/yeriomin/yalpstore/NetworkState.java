@@ -1,12 +1,15 @@
 package com.github.yeriomin.yalpstore;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.util.Log;
 
-import eu.chainfire.libsuperuser.Shell;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Collections;
 
 import static android.content.Context.CONNECTIVITY_SERVICE;
 import static android.net.ConnectivityManager.TYPE_MOBILE;
@@ -19,13 +22,41 @@ import static android.net.ConnectivityManager.TYPE_WIMAX;
 
 public class NetworkState {
 
-    static public boolean isVpn() {
-        for (String line: Shell.SH.run("ls -1 /sys/class/net")) {
-            String networkName = line.trim();
-            if (networkName.startsWith("tun") || networkName.startsWith("ppp")) {
-                Log.i(NetworkState.class.getName(), "VPN seems to be on: " + networkName);
+    static public boolean isVpn(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            return isVpnLollipop(context);
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            return isVpnHoneycomb();
+        } else {
+            return false;
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    static private boolean isVpnLollipop(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (cm == null) {
+            return false;
+        }
+        for (NetworkInfo networkInfo: cm.getAllNetworkInfo()) {
+            if (networkInfo.isConnectedOrConnecting() && networkInfo.getType() == ConnectivityManager.TYPE_VPN) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    static private boolean isVpnHoneycomb() {
+        try {
+            for (NetworkInterface ni: Collections.list(NetworkInterface.getNetworkInterfaces())) {
+                if (ni.isUp() && (ni.getName().startsWith("tun") || ni.getName().startsWith("ppp")))  {
+                    Log.i(NetworkState.class.getName(), "VPN seems to be on: " + ni.getName());
+                    return true;
+                }
+            }
+        } catch (SocketException e) {
+            // Could not get network interfaces
         }
         return false;
     }
