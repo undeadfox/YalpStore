@@ -15,11 +15,11 @@ import com.github.yeriomin.yalpstore.Downloader;
 import com.github.yeriomin.yalpstore.ManualDownloadActivity;
 import com.github.yeriomin.yalpstore.OnDownloadProgressListener;
 import com.github.yeriomin.yalpstore.Paths;
-import com.github.yeriomin.yalpstore.PurchaseTask;
 import com.github.yeriomin.yalpstore.R;
-import com.github.yeriomin.yalpstore.SelfUpdateChecker;
 import com.github.yeriomin.yalpstore.model.App;
 import com.github.yeriomin.yalpstore.notification.CancelDownloadService;
+import com.github.yeriomin.yalpstore.selfupdate.UpdaterFactory;
+import com.github.yeriomin.yalpstore.task.playstore.PurchaseTask;
 
 import java.io.File;
 
@@ -85,7 +85,7 @@ public class ButtonDownload extends Button {
         if (app.getPackageName().equals(BuildConfig.APPLICATION_ID)) {
             new Downloader(button.getContext()).download(
                 app,
-                AndroidAppDeliveryData.newBuilder().setDownloadUrl(SelfUpdateChecker.getUrlString(app.getVersionCode())).build(),
+                AndroidAppDeliveryData.newBuilder().setDownloadUrl(UpdaterFactory.get(activity).getUrlString(app.getVersionCode())).build(),
                 getDownloadProgressListener()
             );
         } else if (prepareDownloadsDir()) {
@@ -140,9 +140,9 @@ public class ButtonDownload extends Button {
         }
 
         @Override
-        protected void onPostExecute(Throwable e) {
-            super.onPostExecute(e);
-            if (null == e) {
+        protected void onPostExecute(AndroidAppDeliveryData deliveryData) {
+            super.onPostExecute(deliveryData);
+            if (success()) {
                 fragment.disableButton(R.id.download, R.string.details_downloading);
             }
         }

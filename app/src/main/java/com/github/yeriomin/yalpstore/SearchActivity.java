@@ -8,21 +8,27 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Spinner;
 
+import com.github.yeriomin.yalpstore.model.App;
+import com.github.yeriomin.yalpstore.task.playstore.DetailsTask;
+import com.github.yeriomin.yalpstore.task.playstore.SearchTask;
+
 import java.util.regex.Pattern;
 
 public class SearchActivity extends EndlessScrollActivity {
 
-    static private final String PUBLISHER_PREFIX = "pub:";
-
     private String query;
     private String categoryId = CategoryManager.TOP;
+
+    static protected boolean actionIs(Intent intent, String action) {
+        return null != intent && null != intent.getAction() && intent.getAction().equals(action);
+    }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
 
         String newQuery = getQuery(intent);
-        if (getIntent().getAction().equals(Intent.ACTION_VIEW) && looksLikeAPackageId(newQuery)) {
+        if (actionIs(intent, Intent.ACTION_VIEW) && looksLikeAPackageId(newQuery)) {
             Log.i(getClass().getName(), "Following search suggestion to app page: " + newQuery);
             startActivity(DetailsActivity.getDetailsIntent(this, newQuery));
             finish();
@@ -33,7 +39,7 @@ public class SearchActivity extends EndlessScrollActivity {
             clearApps();
             this.categoryId = CategoryManager.TOP;
             this.query = newQuery;
-            setTitle(getSearchTitle());
+            setTitle(getString(R.string.activity_title_search, query));
             if (looksLikeAPackageId(query)) {
                 Log.i(getClass().getName(), query + " looks like a package id");
                 checkPackageId(query);
@@ -66,24 +72,18 @@ public class SearchActivity extends EndlessScrollActivity {
         return task;
     }
 
-    private String getSearchTitle() {
-        if (query.startsWith(PUBLISHER_PREFIX)) {
-            return getString(R.string.activity_title_search_publisher, query.substring(PUBLISHER_PREFIX.length()));
-        }
-        return getString(R.string.activity_title_search, query);
-    }
-
     private String getQuery(Intent intent) {
         if (intent.getScheme() != null
             && (intent.getScheme().equals("market")
-            || intent.getScheme().equals("http")
-            || intent.getScheme().equals("https"))
+                || intent.getScheme().equals("http")
+                || intent.getScheme().equals("https")
+            )
         ) {
             return intent.getData().getQueryParameter("q");
         }
-        if (intent.getAction().equals(Intent.ACTION_SEARCH)) {
+        if (actionIs(intent, Intent.ACTION_SEARCH)) {
             return intent.getStringExtra(SearchManager.QUERY);
-        } else if (intent.getAction().equals(Intent.ACTION_VIEW)) {
+        } else if (actionIs(intent, Intent.ACTION_VIEW)) {
             return intent.getDataString();
         }
         return null;
@@ -111,8 +111,8 @@ public class SearchActivity extends EndlessScrollActivity {
         }
 
         @Override
-        protected void onPostExecute(Throwable result) {
-            super.onPostExecute(result);
+        protected void onPostExecute(App app) {
+            super.onPostExecute(app);
             if (null != app) {
                 DetailsActivity.app = app;
                 showPackageIdDialog(app.getPackageName());

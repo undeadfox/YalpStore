@@ -13,39 +13,46 @@ import android.util.Log;
 import com.github.yeriomin.playstoreapi.AuthException;
 import com.github.yeriomin.playstoreapi.GooglePlayException;
 import com.github.yeriomin.playstoreapi.TokenDispenserException;
+import com.github.yeriomin.yalpstore.task.playstore.CloneableTask;
+import com.github.yeriomin.yalpstore.task.playstore.PlayStoreTask;
 
 import java.io.IOException;
 
 abstract public class CredentialsDialogBuilder {
 
     protected Context context;
-    protected GoogleApiAsyncTask taskClone;
+    protected PlayStoreTask caller;
 
     public CredentialsDialogBuilder(Context context) {
         this.context = context;
     }
 
-    public void setTaskClone(GoogleApiAsyncTask taskClone) {
-        this.taskClone = taskClone;
+    public void setCaller(PlayStoreTask caller) {
+        this.caller = caller;
     }
 
     abstract public Dialog show();
 
-    abstract protected class CheckCredentialsTask extends GoogleApiAsyncTask {
+    abstract protected class CheckCredentialsTask extends PlayStoreTask<Void> {
+
+        protected PlayStoreTask caller;
+
+        public void setCaller(PlayStoreTask caller) {
+            this.caller = caller;
+        }
 
         static private final String APP_PASSWORDS_URL = "https://security.google.com/settings/security/apppasswords";
 
         abstract protected CredentialsDialogBuilder getDialogBuilder();
 
         @Override
-        protected void onPostExecute(Throwable e) {
-            super.onPostExecute(e);
-            if (null == e) {
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            if (success()) {
                 new FirstLaunchChecker(context).setLoggedIn();
-                if (null != this.taskClone) {
-                    this.taskClone.execute();
-                } else {
-                    Log.i(getClass().getName(), "No task clone provided");
+                if (caller instanceof CloneableTask) {
+                    Log.i(getClass().getName(), caller.getClass().getName() + " is cloneable. Retrying.");
+                    ((PlayStoreTask) ((CloneableTask) caller).clone()).execute(new String[] {});
                 }
             }
         }
@@ -59,8 +66,8 @@ abstract public class CredentialsDialogBuilder {
                 return;
             }
             CredentialsDialogBuilder builder = getDialogBuilder();
-            if (null != this.taskClone) {
-                builder.setTaskClone(this.taskClone);
+            if (null != caller) {
+                builder.setCaller(caller);
             }
             builder.show();
         }
@@ -69,7 +76,6 @@ abstract public class CredentialsDialogBuilder {
         protected void processIOException(IOException e) {
             super.processIOException(e);
             if (e instanceof TokenDispenserException) {
-                e.getCause().printStackTrace();
                 ContextUtil.toast(context, R.string.error_token_dispenser_problem);
             } else if (e instanceof GooglePlayException && ((GooglePlayException) e).getCode() == 500) {
                 PreferenceManager.getDefaultSharedPreferences(context).edit().putString(PreferenceActivity.PREFERENCE_BACKGROUND_UPDATE_INTERVAL, "-1").commit();
