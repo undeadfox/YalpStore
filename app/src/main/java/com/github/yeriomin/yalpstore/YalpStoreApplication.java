@@ -5,27 +5,22 @@ import android.app.Application;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Configuration;
+import android.net.http.HttpResponseCache;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class YalpStoreApplication extends Application {
 
-    private boolean appListNeedsUpdate = true;
     private boolean isBackgroundUpdating = false;
     private List<String> pendingUpdates = new ArrayList<>();
-
-    public boolean appListNeedsUpdate() {
-        return appListNeedsUpdate;
-    }
-
-    public void setAppListNeedsUpdate(boolean appListNeedsUpdate) {
-        this.appListNeedsUpdate = appListNeedsUpdate;
-    }
 
     public boolean isBackgroundUpdating() {
         return isBackgroundUpdating;
@@ -40,10 +35,19 @@ public class YalpStoreApplication extends Application {
     }
 
     public void removePendingUpdate(String packageName) {
+        removePendingUpdate(packageName, false);
+    }
+
+    public void removePendingUpdate(String packageName, boolean installed) {
         pendingUpdates.remove(packageName);
+        Intent appIntent = new Intent(UpdateAllReceiver.ACTION_APP_UPDATE_COMPLETE);
+        appIntent.putExtra(UpdateAllReceiver.EXTRA_PACKAGE_NAME, packageName);
+        appIntent.putExtra(UpdateAllReceiver.EXTRA_UPDATE_ACTUALLY_INSTALLED, installed);
+        sendBroadcast(appIntent, null);
         if (pendingUpdates.isEmpty()) {
             isBackgroundUpdating = false;
-            sendBroadcast(new Intent(UpdateAllReceiver.ACTION_UPDATE_COMPLETE));
+            Intent allIntent = new Intent(UpdateAllReceiver.ACTION_ALL_UPDATES_COMPLETE);
+            sendBroadcast(allIntent, null);
         }
     }
 
@@ -54,6 +58,13 @@ public class YalpStoreApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            try {
+                HttpResponseCache.install(new File(getCacheDir(), "http"), 5 * 1024 * 1024);
+            } catch (IOException e) {
+                Log.e(getClass().getName(), "Could not register cache " + e.getMessage());
+            }
+        }
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
         Thread.setDefaultUncaughtExceptionHandler(new YalpStoreUncaughtExceptionHandler(getApplicationContext()));
         registerDownloadReceiver();

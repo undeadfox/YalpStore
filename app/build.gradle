@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 26
-    buildToolsVersion "26.0.0"
+    buildToolsVersion '26.0.2'
 
     def getVersionName = { ->
         def stdout = new ByteArrayOutputStream()
@@ -83,6 +83,6 @@ android {
 dependencies {
     compile 'commons-net:commons-net:3.5'
     compile 'com.nothome:javaxdelta:2.0.1'
-    compile 'com.github.yeriomin:play-store-api:0.27'
+    compile 'com.github.yeriomin:play-store-api:0.29'
     compile 'eu.chainfire:libsuperuser:1.0.0.201608240809'
 }
