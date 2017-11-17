@@ -4,21 +4,19 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ProgressBar;
 
 import com.github.yeriomin.playstoreapi.AndroidAppDeliveryData;
 import com.github.yeriomin.yalpstore.BuildConfig;
 import com.github.yeriomin.yalpstore.ContextUtil;
-import com.github.yeriomin.yalpstore.DetailsActivity;
 import com.github.yeriomin.yalpstore.DownloadState;
 import com.github.yeriomin.yalpstore.Downloader;
 import com.github.yeriomin.yalpstore.ManualDownloadActivity;
 import com.github.yeriomin.yalpstore.OnDownloadProgressListener;
 import com.github.yeriomin.yalpstore.Paths;
 import com.github.yeriomin.yalpstore.R;
+import com.github.yeriomin.yalpstore.YalpStoreActivity;
 import com.github.yeriomin.yalpstore.model.App;
-import com.github.yeriomin.yalpstore.notification.CancelDownloadService;
 import com.github.yeriomin.yalpstore.selfupdate.UpdaterFactory;
 import com.github.yeriomin.yalpstore.task.playstore.PurchaseTask;
 
@@ -29,7 +27,7 @@ import static com.github.yeriomin.yalpstore.DownloadState.TriggeredBy.MANUAL_DOW
 
 public class ButtonDownload extends Button {
 
-    public ButtonDownload(final DetailsActivity activity, final App app) {
+    public ButtonDownload(YalpStoreActivity activity, App app) {
         super(activity, app);
     }
 
@@ -39,7 +37,7 @@ public class ButtonDownload extends Button {
     }
 
     @Override
-    protected boolean shouldBeVisible() {
+    public boolean shouldBeVisible() {
         return (!Paths.getApkPath(activity, app.getPackageName(), app.getVersionCode()).exists()
                 || !DownloadState.get(app.getPackageName()).isEverythingSuccessful()
             )
@@ -50,11 +48,19 @@ public class ButtonDownload extends Button {
 
     @Override
     protected void onButtonClick(View v) {
+        checkAndDownload();
+    }
+
+    public void checkAndDownload() {
         if (app.getVersionCode() == 0 && !(activity instanceof ManualDownloadActivity)) {
             activity.startActivity(new Intent(activity, ManualDownloadActivity.class));
         } else if (activity.checkPermission()) {
+            Log.i(getClass().getName(), "Write permission granted");
             download();
-            activity.findViewById(R.id.cancel).setVisibility(View.VISIBLE);
+            View buttonCancel = activity.findViewById(R.id.cancel);
+            if (null != buttonCancel) {
+                buttonCancel.setVisibility(View.VISIBLE);
+            }
         } else {
             activity.requestPermission();
         }
@@ -66,7 +72,7 @@ public class ButtonDownload extends Button {
         if (Paths.getApkPath(activity, app.getPackageName(), app.getVersionCode()).exists()
             && !DownloadState.get(app.getPackageName()).isEverythingSuccessful()
         ) {
-            disableButton(R.id.download, R.string.details_downloading);
+            disable(R.string.details_downloading);
         }
     }
 
@@ -77,12 +83,16 @@ public class ButtonDownload extends Button {
                 AndroidAppDeliveryData.newBuilder().setDownloadUrl(UpdaterFactory.get(activity).getUrlString(app.getVersionCode())).build(),
                 getDownloadProgressListener()
             );
-        } else if (prepareDownloadsDir()) {
-            getPurchaseTask().execute();
         } else {
-            File dir = Paths.getYalpPath(activity);
-            Log.i(getClass().getName(), dir.getAbsolutePath() + " exists=" + dir.exists() + ", isDirectory=" + dir.isDirectory() + ", writable=" + dir.canWrite());
-            ContextUtil.toast(this.activity.getApplicationContext(), R.string.error_downloads_directory_not_writable);
+            boolean writePermission = activity.checkPermission();
+            Log.i(getClass().getName(), "Write permission granted - " + writePermission);
+            if (writePermission && prepareDownloadsDir()) {
+                getPurchaseTask().execute();
+            } else {
+                File dir = Paths.getYalpPath(activity);
+                Log.i(getClass().getName(), dir.getAbsolutePath() + " exists=" + dir.exists() + ", isDirectory=" + dir.isDirectory() + ", writable=" + dir.canWrite());
+                ContextUtil.toast(this.activity.getApplicationContext(), R.string.error_downloads_directory_not_writable);
+            }
         }
     }
 
@@ -96,6 +106,9 @@ public class ButtonDownload extends Button {
 
     private OnDownloadProgressListener getDownloadProgressListener() {
         ProgressBar progressBar = activity.findViewById(R.id.download_progress);
+        if (null == progressBar) {
+            return null;
+        }
         progressBar.setVisibility(View.VISIBLE);
         progressBar.setProgress(0);
         return new OnDownloadProgressListener(progressBar, DownloadState.get(app.getPackageName()));
@@ -134,7 +147,7 @@ public class ButtonDownload extends Button {
         protected void onPostExecute(AndroidAppDeliveryData deliveryData) {
             super.onPostExecute(deliveryData);
             if (success()) {
-                fragment.disableButton(R.id.download, R.string.details_downloading);
+                fragment.disable(R.string.details_downloading);
             }
         }
     }
