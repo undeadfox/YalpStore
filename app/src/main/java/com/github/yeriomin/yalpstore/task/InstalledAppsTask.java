@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class InstalledAppsTask extends TaskWithProgress<Map<String, App>> {
 
-    protected Map<String, App> installedApps = new HashMap<>();
     protected boolean includeSystemApps = false;
 
     public void setIncludeSystemApps(boolean includeSystemApps) {
@@ -37,10 +36,16 @@ public class InstalledAppsTask extends TaskWithProgress<Map<String, App>> {
         return result;
     }
 
-    public Map<String, App> getInstalledApps() {
+    public Map<String, App> getInstalledApps(boolean includeDisabled) {
         Map<String, App> installedApps = new HashMap<>();
         PackageManager pm = context.getPackageManager();
         for (PackageInfo reducedPackageInfo: pm.getInstalledPackages(0)) {
+            if (!includeDisabled
+                && null != reducedPackageInfo.applicationInfo
+                && !reducedPackageInfo.applicationInfo.enabled
+            ) {
+                continue;
+            }
             App app = getInstalledApp(pm, reducedPackageInfo.packageName);
             if (null != app) {
                 installedApps.put(app.getPackageName(), app);
@@ -54,7 +59,6 @@ public class InstalledAppsTask extends TaskWithProgress<Map<String, App>> {
 
     @Override
     protected Map<String, App> doInBackground(String... strings) {
-        installedApps = getInstalledApps();
-        return installedApps;
+        return getInstalledApps(true);
     }
 }
