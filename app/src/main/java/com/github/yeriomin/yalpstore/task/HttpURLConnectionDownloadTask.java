@@ -11,7 +11,6 @@ import android.util.Log;
 import com.github.yeriomin.yalpstore.DownloadManagerFake;
 import com.github.yeriomin.yalpstore.DownloadManagerInterface;
 import com.github.yeriomin.yalpstore.DownloadState;
-import com.github.yeriomin.yalpstore.OnDownloadProgressListener;
 import com.github.yeriomin.yalpstore.R;
 import com.github.yeriomin.yalpstore.Util;
 import com.github.yeriomin.yalpstore.notification.CancelDownloadService;
@@ -34,7 +33,6 @@ public class HttpURLConnectionDownloadTask extends AsyncTask<String, Long, Boole
     private Context context;
     private File targetFile;
     private long downloadId;
-    private OnDownloadProgressListener listener;
 
     public void setContext(Context context) {
         this.context = context;
@@ -46,10 +44,6 @@ public class HttpURLConnectionDownloadTask extends AsyncTask<String, Long, Boole
 
     public void setDownloadId(long downloadId) {
         this.downloadId = downloadId;
-    }
-
-    public void setOnDownloadProgressListener(OnDownloadProgressListener listener) {
-        this.listener = listener;
     }
 
     @Override
@@ -75,9 +69,9 @@ public class HttpURLConnectionDownloadTask extends AsyncTask<String, Long, Boole
     @Override
     protected void onProgressUpdate(Long... values) {
         super.onProgressUpdate(values);
-        DownloadState.get(downloadId).setProgress(downloadId, values[0].intValue(), values[1].intValue());
-        if (null != listener) {
-            listener.onDownloadProgress();
+        DownloadState state = DownloadState.get(downloadId);
+        if (null != state) {
+            state.setProgress(downloadId, values[0].intValue(), values[1].intValue());
         }
         notifyProgress(values[0], values[1]);
     }
@@ -165,6 +159,8 @@ public class HttpURLConnectionDownloadTask extends AsyncTask<String, Long, Boole
         } catch (IOException e) {
             Log.e(getClass().getSimpleName(), "Could not read: " + e.getMessage());
             DownloadManagerFake.putStatus(downloadId, DownloadManagerInterface.ERROR_HTTP_DATA_ERROR);
+            Util.closeSilently(out);
+            targetFile.delete();
             return false;
         } finally {
             Util.closeSilently(in);
@@ -194,6 +190,8 @@ public class HttpURLConnectionDownloadTask extends AsyncTask<String, Long, Boole
             } catch (IOException e) {
                 Log.e(getClass().getSimpleName(), "Could not write file: " + e.getMessage());
                 DownloadManagerFake.putStatus(downloadId, DownloadManagerInterface.ERROR_FILE_ERROR);
+                Util.closeSilently(out);
+                targetFile.delete();
                 return;
             }
         }

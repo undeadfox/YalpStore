@@ -35,8 +35,7 @@ public class BugReportSenderFtp extends BugReportSender {
         super.compose();
         files.add(new BugReportMessageBuilder(context)
             .setIdentification(userIdentification)
-            .setStackTrace(userIdentification)
-            .setIdentification(stackTrace)
+            .setStackTrace(stackTrace)
             .setMessage(userMessage)
             .build()
             .getFile()

@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.github.yeriomin.yalpstore.DetailsActivity;
-import com.github.yeriomin.yalpstore.PreferenceActivity;
+import com.github.yeriomin.yalpstore.PlayStoreApiAuthenticator;
 import com.github.yeriomin.yalpstore.R;
 import com.github.yeriomin.yalpstore.model.App;
 import com.github.yeriomin.yalpstore.task.playstore.BetaToggleTask;
@@ -18,9 +18,18 @@ public class Beta extends Abstract {
 
     @Override
     public void draw() {
+        if (PreferenceManager.getDefaultSharedPreferences(activity).getBoolean(PlayStoreApiAuthenticator.PREFERENCE_APP_PROVIDED_EMAIL, false)
+            && app.isTestingProgramAvailable()
+            && app.isTestingProgramOptedIn()
+        ) {
+            // Auto-leave beta program if current account is built-in.
+            // The users expect stable to be default.
+            new BetaToggleTask(app).execute();
+            return;
+        }
         if (!app.isInstalled()
             || !app.isTestingProgramAvailable()
-            || PreferenceManager.getDefaultSharedPreferences(activity).getBoolean(PreferenceActivity.PREFERENCE_APP_PROVIDED_EMAIL, false)
+            || PreferenceManager.getDefaultSharedPreferences(activity).getBoolean(PlayStoreApiAuthenticator.PREFERENCE_APP_PROVIDED_EMAIL, false)
         ) {
             return;
         }

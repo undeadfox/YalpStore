@@ -1,14 +1,8 @@
 package com.github.yeriomin.yalpstore;
 
 import android.os.Bundle;
-import android.util.Log;
-import android.view.ContextMenu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.TextView;
 
-import com.github.yeriomin.yalpstore.fragment.details.ButtonDownload;
 import com.github.yeriomin.yalpstore.model.App;
 import com.github.yeriomin.yalpstore.task.playstore.EndlessScrollTask;
 import com.github.yeriomin.yalpstore.view.ListItem;
@@ -31,7 +25,6 @@ abstract public class EndlessScrollActivity extends AppListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((TextView) getListView().getEmptyView()).setText(getString(R.string.list_empty_search));
         onNewIntent(getIntent());
         getListView().setOnScrollListener(new ScrollEdgeListener() {
 
@@ -74,9 +67,7 @@ abstract public class EndlessScrollActivity extends AppListActivity {
     protected EndlessScrollTask prepareTask(EndlessScrollTask task) {
         task.setContext(this);
         task.setErrorView((TextView) getListView().getEmptyView());
-        if (getListView().getAdapter().isEmpty()) {
-            task.prepareDialog(R.string.dialog_message_loading_app_list_search, R.string.dialog_title_loading_app_list_search);
-        }
+        task.setProgressIndicator(findViewById(R.id.progress));
         return task;
     }
 

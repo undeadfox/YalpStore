@@ -1,5 +1,6 @@
 package com.github.yeriomin.yalpstore.task.playstore;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -63,7 +64,10 @@ abstract public class PlayStoreTask<T> extends TaskWithProgress<T> {
         if (noNetwork(e)) {
             message = this.context.getString(R.string.error_no_network);
         } else {
-            message = this.context.getString(R.string.error_network_other, e.getClass().getName() + " " + e.getMessage());
+            message = TextUtils.isEmpty(e.getMessage())
+                ? this.context.getString(R.string.error_network_other, e.getClass().getName())
+                : e.getMessage()
+            ;
         }
         if (null != this.errorView) {
             this.errorView.setText(message);
@@ -83,10 +87,9 @@ abstract public class PlayStoreTask<T> extends TaskWithProgress<T> {
                 ContextUtil.toast(context, R.string.first_login_message);
                 return;
             }
-        } else if (e.getCode() == 401 && PreferenceActivity.getBoolean(context, PreferenceActivity.PREFERENCE_APP_PROVIDED_EMAIL)) {
+        } else if (e.getCode() == 401 && PreferenceActivity.getBoolean(context, PlayStoreApiAuthenticator.PREFERENCE_APP_PROVIDED_EMAIL)) {
             Log.i(getClass().getSimpleName(), "Token is stale");
-            new PlayStoreApiAuthenticator(context).logout();
-            builder.logInWithPredefinedAccount();
+            builder.refreshToken();
             return;
         } else {
             ContextUtil.toast(this.context, R.string.error_incorrect_password);
