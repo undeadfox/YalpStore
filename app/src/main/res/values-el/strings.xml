@@ -27,12 +27,6 @@
 Άγγιξε το «Δημιουργία Συνθηματικού» για να μεταφερθείς στην σελίδα δημιουργίας του συνθηματικού."</string>
 <string name="dialog_title_logout">"Να γίνει αποσύνδεση;"</string>
 <string name="dialog_message_logout">"Σίγουρα θες να αποσυνδεθείς;"</string>
-<string name="dialog_title_reviews">"Λαμβάνονται οι αξιολογήσεις"</string>
-<string name="dialog_message_reviews">"Παρακαλώ, περίμενε. Λαμβάνονται οι αξιολογήσεις."</string>
-<string name="dialog_title_purchasing_app">"Γίνεται λήψη της εφαρμογής"</string>
-<string name="dialog_message_purchasing_app">"Παρακαλώ, περίμενε. Αρχίζει η λήψη της εφαρμογής που ζητήθηκε."</string>
-<string name="dialog_title_loading_app_list_search">"Γίνεται αναζήτηση"</string>
-<string name="dialog_message_loading_app_list_search">"Αναμονή… Αναζήτηση για εφαρμογές."</string>
 <string name="dialog_account_type_provided_by_user">"Με τον δικό μου λογαριασμό της Google"</string>
 <string name="dialog_account_type_predefined">"Με ένα εικονικό λογαριασμό του Yalp Store "</string>
 <string name="dialog_account_type_title">"Πώς θα ήθελες να συνδεθείς στο Google Play Store;"</string>
@@ -259,4 +253,30 @@
 <string name="testing_program_section_opted_out_title">"Γίνε δοκιμαστής της beta"</string>
 <string name="notification_not_privileged">"Δεν έχουν παραχωρηθεί δικαιώματα εγκατάστασης"</string>
 <string name="about_paypal_label">"Δωρεά Paypal:"</string>
+<string name="testing_program_review_dialog_content_hint">Εισάγετε σχόλια σχετικά με την εφαρμογή</string>
+<string name="delete">Διαγραφή</string>
+<string name="submit">Υποβολή</string>
+<string name="done">Τέλος</string>
+<string name="availability_restriction_carrier">Αυτό το αντικείμενο δεν είναι διαθέσιμο στην εταιρεία κινητής τηλεφωνίας σας.</string>
+<string name="availability_restriction_country">Αυτό το στοιχείο δεν είναι διαθέσιμο στη χώρα σας.</string>
+<string name="availability_restriction_country_or_carrier">Αυτό το αντικείμενο δεν είναι διαθέσιμο στη χώρα σας ή στην εταιρεία κινητής τηλεφωνίας σας.</string>
+<string name="availability_restriction_for_managed_account">Ο διαχειριστής σας δεν σας έχει παραχωρήσει πρόσβαση σε αυτό το στοιχείο.</string>
+<string name="availability_restriction_generic">Δεν είναι διαθέσιμο.</string>
+<string name="availability_restriction_hardware">Η συσκευή σας δεν είναι συμβατή με αυτό το στοιχείο.</string>
+<string name="availability_restriction_hardware_app">Η συσκευή σας δεν είναι συμβατή με αυτήν την έκδοση.</string>
+<string name="availability_restriction_hardware_app_ram_generic">Αυτή η εφαρμογή απαιτεί περισσότερη μνήμη RAM από ό,τι είναι διαθέσιμη στη συσκευή σας.</string>
+<string name="availability_restriction_missing_permission">"Ο διαχειριστής σας δεν έχει αποδεχτεί τα δικαιώματα γι' αυτό το στοιχείο."</string>
+<string name="availability_restriction_not_in_group">Δεν ανήκετε στη στοχευμένη ομάδα αυτού του στοιχείου.</string>
+<string name="flag_graphic_violence">Σκληρή βία</string>
+<string name="flag_harmful_prompt">Περιγράψτε τη ζημιά που προκλήθηκε στη συσκευή ή τα δεδομένα σας:</string>
+<string name="flag_harmful_to_device">Επιβλ.για τη συσκ. ή τα δεδομ.</string>
+<string name="flag_hateful_content">Περιεχόμενο μίσους ή βίας</string>
+<string name="flag_improper_content_rating">Αξιολόγ. ακατάλληλου περιεχομ.</string>
+<string name="flag_other_concern_prompt">Περιγράψτε την ένσταση</string>
+<string name="flag_other_objection">Άλλη ένσταση</string>
+<string name="flag_page_description">Ο λόγος για τον οποίο θεωρείτε αυτό το περιεχόμενο ή την εφαρμογή μη αποδεκτά:</string>
+<string name="flag_pharma_content">Παράνομη συνταγή/άλλο φάρμακο</string>
+<string name="flag_sexual_content">Σεξουαλικό περιεχόμενο</string>
+<string name="flagging_title">Επισήμανση ως ακατάλληλου</string>
+<string name="content_flagged">Η ένσταση υποβλήθηκε.</string>
 </resources>

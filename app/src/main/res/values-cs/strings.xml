@@ -27,12 +27,6 @@ Vytvořte prosím heslo pro aplikaci Yalp Store a použijte jej k přihlášení
 Klikněte na \"Vytvořit heslo\" pro přesměrování na stránky pro vytvoření hesla."</string>
 <string name="dialog_title_logout">"Odhlásit se?"</string>
 <string name="dialog_message_logout">"Opravdu se chcete odhlásit?"</string>
-<string name="dialog_title_reviews">"Získávám hodnocení"</string>
-<string name="dialog_message_reviews">"Čekejte prosím. Získávám hodnocení."</string>
-<string name="dialog_title_purchasing_app">"Stahuji aplikaci"</string>
-<string name="dialog_message_purchasing_app">"Čekejte prosím. Zahajuji stahovaní požadované aplikace."</string>
-<string name="dialog_title_loading_app_list_search">"Vyhledávám"</string>
-<string name="dialog_message_loading_app_list_search">"Čekejte prosím. Vyhledávám aplikace."</string>
 <string name="dialog_account_type_provided_by_user">"S mým vlastním Google účtem"</string>
 <string name="dialog_account_type_predefined">"S falešným Yalp Store účtem"</string>
 <string name="dialog_account_type_title">"Jak se chcete přihlásit do obchodu Google Play?"</string>
@@ -252,4 +246,30 @@ Pokračovat?"</string>
 <string name="testing_program_section_opted_out_title">"Staňte se testerem beta verze"</string>
 <string name="notification_not_privileged">"Install permission not granted"</string>
 <string name="about_paypal_label">"Přispět:"</string>
+<string name="testing_program_review_dialog_content_hint">Zadejte zpětnou vazbu k aplikaci</string>
+<string name="delete">Smazat</string>
+<string name="submit">Odeslat</string>
+<string name="done">Hotovo</string>
+<string name="availability_restriction_carrier">Tato položka není u vašeho operátora dostupná.</string>
+<string name="availability_restriction_country">Tato položka není ve vaší zemi dostupná.</string>
+<string name="availability_restriction_country_or_carrier">Tato položka není ve vaší zemi nebo u vašeho operátora dostupná.</string>
+<string name="availability_restriction_for_managed_account">Administrátor vám k této položce neudělil přístup.</string>
+<string name="availability_restriction_generic">Tato položka není dostupná.</string>
+<string name="availability_restriction_hardware">Zařízení s touto položkou není kompatibilní.</string>
+<string name="availability_restriction_hardware_app">Zařízení není kompatibilní s touto verzí.</string>
+<string name="availability_restriction_hardware_app_ram_generic">Tato aplikace vyžaduje víc paměti RAM, než je v zařízení k dispozici.</string>
+<string name="availability_restriction_missing_permission">Administrátor pro tuto položku nepřijal oprávnění.</string>
+<string name="availability_restriction_not_in_group">Nepatříte do cílové skupiny pro tuto položku.</string>
+<string name="flag_graphic_violence">Explicitní násilí</string>
+<string name="flag_harmful_prompt">Popište poškození způsobené vašemu zařízení nebo datům:</string>
+<string name="flag_harmful_to_device">Škodlivé pro zařízení nebo data</string>
+<string name="flag_hateful_content">Nenávistný nebo obtěžující obsah</string>
+<string name="flag_improper_content_rating">Nesprávné hodnocení obsahu</string>
+<string name="flag_other_concern_prompt">Popište námitku.</string>
+<string name="flag_other_objection">Jiná námitka</string>
+<string name="flag_page_description">Důvod, proč považujete tento obsah nebo tuto aplikaci za nevhodné:</string>
+<string name="flag_pharma_content">Nelegální lék nebo jiná droga</string>
+<string name="flag_sexual_content">Erotický obsah</string>
+<string name="flagging_title">Nahlásit jako nevhodné</string>
+<string name="content_flagged">Námitka byla odeslána.</string>
 </resources>

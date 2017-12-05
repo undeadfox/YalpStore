@@ -27,12 +27,6 @@ Creëer alstublieft een wachtwoord voor Yalp Store en gebruik deze om in te logg
 Tik op 'wachtwoord maken' om te worden doorgestuurd naar de pagina voor het maken van wachtwoorden."</string>
 <string name="dialog_title_logout">"Uitloggen?"</string>
 <string name="dialog_message_logout">"Weet je zeker dat je wilt uitloggen?"</string>
-<string name="dialog_title_reviews">"Recensies krijgen"</string>
-<string name="dialog_message_reviews">"Even geduld aub. Recensies laden."</string>
-<string name="dialog_title_purchasing_app">"Downloading app"</string>
-<string name="dialog_message_purchasing_app">"Even geduld. De download van de app wordt gestart."</string>
-<string name="dialog_title_loading_app_list_search">"Zoeken"</string>
-<string name="dialog_message_loading_app_list_search">"Even geduld. Apps worden gezocht."</string>
 <string name="dialog_account_type_provided_by_user">"Met mijn eigen Google account"</string>
 <string name="dialog_account_type_predefined">"Met een neppe Yalp Store account"</string>
 <string name="dialog_account_type_title">"Hoe wil je inloggen op de Google Play Store?"</string>
@@ -258,4 +252,30 @@ Nu doen?"</string>
 <string name="pref_download_deltas">"Delta updates"</string>
 <string name="pref_download_deltas_summary_off">"De volledige apk wordt bij iedere update gedownload"</string>
 <string name="pref_download_deltas_summary_on">"Alleen de veranderingen aan de app worden gedownload"</string>
+<string name="testing_program_review_dialog_content_hint">Geef feedback over de app</string>
+<string name="delete">Verwijderen</string>
+<string name="done">Gereed</string>
+<string name="submit">Indienen</string>
+<string name="availability_restriction_carrier">Dit item is niet beschikbaar bij jouw provider.</string>
+<string name="availability_restriction_country">Dit item is niet beschikbaar in je land.</string>
+<string name="availability_restriction_country_or_carrier">Dit item is niet beschikbaar in jouw land of bij jouw provider.</string>
+<string name="availability_restriction_for_managed_account">Je beheerder heeft je geen toegang gegeven tot dit item.</string>
+<string name="availability_restriction_generic">Dit item is niet beschikbaar.</string>
+<string name="availability_restriction_hardware">Je apparaat is niet compatibel met dit item.</string>
+<string name="availability_restriction_hardware_app">Je apparaat is niet compatibel met deze versie.</string>
+<string name="availability_restriction_hardware_app_ram_generic">Voor deze app is meer RAM vereist dan beschikbaar is op je apparaat.</string>
+<string name="availability_restriction_missing_permission">Je beheerder heeft geen rechten geaccepteerd voor dit item.</string>
+<string name="availability_restriction_not_in_group">Je behoort niet tot de doelgroep voor dit item.</string>
+<string name="flag_graphic_violence">Expliciet geweld</string>
+<string name="flag_harmful_prompt">Beschrijf de schade aan je apparaat of gegevens:</string>
+<string name="flag_harmful_to_device">Schadelijk voor apparaat/data</string>
+<string name="flag_hateful_content">Haatdragende of beledigende content</string>
+<string name="flag_improper_content_rating">Onjuiste inhoudscategorie</string>
+<string name="flag_other_concern_prompt">Beschrijving van bezwaar</string>
+<string name="flag_other_objection">Ander bezwaar</string>
+<string name="flag_page_description">De reden waarom je deze content of app aanstootgevend vindt:</string>
+<string name="flag_pharma_content">Illegaal geneesmiddel op recept of andere drugs</string>
+<string name="flag_sexual_content">Pornografische content</string>
+<string name="flagging_title">Markeren als ongepast</string>
+<string name="content_flagged">Bezwaar is verzonden.</string>
 </resources>

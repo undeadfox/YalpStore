@@ -27,12 +27,6 @@ Por favor, crea una contraseña de aplicación para Yalp Store y úsala para ini
 Toca \"Crear contraseña\" para ser redirigido"</string>
 <string name="dialog_title_logout">"¿Cerrar sesión?"</string>
 <string name="dialog_message_logout">"¿De verdad que quieres cerrar sesión?"</string>
-<string name="dialog_title_reviews">"Obteniendo reseñas"</string>
-<string name="dialog_message_reviews">"Por favor espere. Obteniendo reseñas."</string>
-<string name="dialog_title_purchasing_app">"Descargando aplicación"</string>
-<string name="dialog_message_purchasing_app">"Por favor espere. Iniciando descarga de la aplicación solicitada."</string>
-<string name="dialog_title_loading_app_list_search">"Buscando"</string>
-<string name="dialog_message_loading_app_list_search">"Por favor espere, buscando aplicaciones"</string>
 <string name="dialog_account_type_provided_by_user">"Con mi cuenta de Google"</string>
 <string name="dialog_account_type_predefined">"Con una cuenta falsa de Yalp Store"</string>
 <string name="dialog_account_type_title">"¿Cómo te gustaría iniciar sesión en Google Play Store?"</string>
@@ -257,4 +251,30 @@ El proceso de conversión es imperfecto y específico para cada marca, así que 
 <string name="pref_download_deltas">"Actualizaciones Delta"</string>
 <string name="pref_download_deltas_summary_off">"Descarga completa del apk cada vez"</string>
 <string name="pref_download_deltas_summary_on">"Solo los cambios son descargados durante las actualizaciones."</string>
+<string name="testing_program_review_dialog_content_hint">Danos tu opinión sobre la aplicación</string>
+<string name="delete">Eliminar</string>
+<string name="submit">Enviar</string>
+<string name="done">Listo</string>
+<string name="availability_restriction_carrier">Este elemento no está disponible para tu operador.</string>
+<string name="availability_restriction_country">Este elemento no está disponible en tu país.</string>
+<string name="availability_restriction_country_or_carrier">Este elemento no está disponible en tu país o para tu operador.</string>
+<string name="availability_restriction_for_managed_account">El administrador no te ha concedido acceso a este elemento.</string>
+<string name="availability_restriction_generic">Este elemento no está disponible.</string>
+<string name="availability_restriction_hardware">Tu dispositivo no es compatible con este elemento.</string>
+<string name="availability_restriction_hardware_app">Tu dispositivo no es compatible con esta versión.</string>
+<string name="availability_restriction_hardware_app_ram_generic">Esta aplicación requiere más RAM de la que hay disponible en tu dispositivo.</string>
+<string name="availability_restriction_missing_permission">El administrador no ha aceptado los permisos correspondientes a este elemento.</string>
+<string name="availability_restriction_not_in_group">No perteneces al grupo al que va dirigido este elemento.</string>
+<string name="flag_graphic_violence">Violencia explícita</string>
+<string name="flag_harmful_prompt">Describe el daño causado en el dispositivo o en los datos:</string>
+<string name="flag_harmful_to_device">Perjudicial para el dispositivo/datos</string>
+<string name="flag_hateful_content">Contenido insultante/incita odio</string>
+<string name="flag_improper_content_rating">Clasificación incorrecta</string>
+<string name="flag_other_concern_prompt">Describir objeción</string>
+<string name="flag_other_objection">Otra objeción</string>
+<string name="flag_page_description">Motivo por el que consideras inadecuado el contenido o la aplicación:</string>
+<string name="flag_pharma_content">Fármacos ilegales/otras drogas</string>
+<string name="flag_sexual_content">Contenido sexual</string>
+<string name="flagging_title">Marcar como inadecuado</string>
+<string name="content_flagged">Se ha enviado una objeción.</string>
 </resources>

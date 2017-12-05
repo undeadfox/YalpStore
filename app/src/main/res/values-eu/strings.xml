@@ -20,19 +20,13 @@
 <string name="dialog_two_factor_cancel">"Orain ez"</string>
 <string name="dialog_two_factor_create_password">"Sortu pasahitza"</string>
 <string name="dialog_title_two_factor">"2 urratsetako egiaztaketa"</string>
-<string name="dialog_message_two_factor">"12 urratsetako egiaztaketa gaitu duzu zure kontuan.
+<string name="dialog_message_two_factor">"2 urratsetako egiaztaketa gaitu duzu zure kontuan.
 
 Sortu Yalp Store aplikazioarentzako pasahitz bat eta erabili Yalp Storen saioa hasteko.
 
 Sakatu \"Sortu pasahitza\" pasahitza saortzeko orrira joateko."</string>
 <string name="dialog_title_logout">"Amaitu saioa?"</string>
 <string name="dialog_message_logout">"Ziur saioa amaitu nahi duzula?"</string>
-<string name="dialog_title_reviews">"Iruzkinak jasotzen"</string>
-<string name="dialog_message_reviews">"Itxaron. Iruzlkinak jasotzen."</string>
-<string name="dialog_title_purchasing_app">"Aplikazioa deskargatzen"</string>
-<string name="dialog_message_purchasing_app">"Itxaron. Eskatutako aplikazioaren deskarga hasten."</string>
-<string name="dialog_title_loading_app_list_search">"Bilatzen"</string>
-<string name="dialog_message_loading_app_list_search">"Itxaron. Aplikazioak bilatzen."</string>
 <string name="dialog_account_type_provided_by_user">"Nire Google kontuarekin"</string>
 <string name="dialog_account_type_predefined">"Yalp Storek hornitutako kontu faltsu batekin"</string>
 <string name="dialog_account_type_title">"Nola hasi nahi duzu saioa Google Play Storen?"</string>
@@ -252,4 +246,30 @@ Jarraitu?"</string>
 <string name="notification_not_privileged">"Ez da eman instalatzeko baimena"</string>
 <string name="about_paypal_label">"Egin dohaintza:"</string>
 <string name="pref_download_directory">"Deskargen direktorioa"</string>
+<string name="testing_program_review_dialog_content_hint">Eman iritzia aplikazioari buruz</string>
+<string name="delete">Ezabatu</string>
+<string name="submit">Bidali</string>
+<string name="done">Eginda</string>
+<string name="availability_restriction_carrier">Elementu hau ez dago operadorean eskuragarri.</string>
+<string name="availability_restriction_country">Elementua ez dago zure herrialdean erabilgarri.</string>
+<string name="availability_restriction_country_or_carrier">Elementua ez dago erabilgarri zure herrialdean edo zure operadorearekin.</string>
+<string name="availability_restriction_for_managed_account">Administratzaileak ez dizu eman elementu honetan sartzeko baimenik.</string>
+<string name="availability_restriction_generic">Elementua ez dago erabilgarri.</string>
+<string name="availability_restriction_hardware">Telefonoa ez da elementu honekin bateragarria.</string>
+<string name="availability_restriction_hardware_app">Gailua ez da bertsioarekin bateragarria.</string>
+<string name="availability_restriction_hardware_app_ram_generic">Gailuan erabilgarri dagoena baino RAM gehiago behar du aplikazioak.</string>
+<string name="availability_restriction_missing_permission">Administratzaileak ez du onartu elementu honen inguruko baimenik.</string>
+<string name="availability_restriction_not_in_group">Ez zaude elementuaren helburu taldean.</string>
+<string name="flag_graphic_violence">Indarkeria grafikoa</string>
+<string name="flag_harmful_prompt">Azaldu gailuari edo datuei eragindako kalteak:</string>
+<string name="flag_harmful_to_device">Gailu/datuetarako kaltegarria</string>
+<string name="flag_hateful_content">Eduki higuingarria/iraingarria</string>
+<string name="flag_improper_content_rating">Edukiaren balorazio desegokia</string>
+<string name="flag_other_concern_prompt">Azaldu eragozpena</string>
+<string name="flag_other_objection">Bestelako eragozpenak</string>
+<string name="flag_page_description">Edukiaren edo aplikazioaren kontrako eragozpenak izateko arrazoia:</string>
+<string name="flag_pharma_content">Legez kanpoko errezeta/droga</string>
+<string name="flag_sexual_content">Eduki sexuala</string>
+<string name="flagging_title">Markatu desegoki gisa</string>
+<string name="content_flagged">Eragozpena bidali da.</string>
 </resources>
