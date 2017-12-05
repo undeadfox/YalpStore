@@ -29,12 +29,6 @@ Proszę o stworzenie dedykowanego hasła aplikacji dla Yalp Store i użycie go d
 Dotknij \"Utwórz hasło\" by zostać przekierowanym do strony, gdzie będziesz mógł utworzyć to hasło."</string>
 <string name="dialog_title_logout">"Wylogować?"</string>
 <string name="dialog_message_logout">"Jesteś pewien, że chcesz się wylogować?"</string>
-<string name="dialog_title_reviews">"Trwa ładowanie recenzji"</string>
-<string name="dialog_message_reviews">"Proszę poczekać. Trwa ładowanie recenzji."</string>
-<string name="dialog_title_purchasing_app">"Pobieranie aplikacji"</string>
-<string name="dialog_message_purchasing_app">"Proszę czekać. Zaczynam pobieranie aplikacji."</string>
-<string name="dialog_title_loading_app_list_search">"Wyszukiwanie"</string>
-<string name="dialog_message_loading_app_list_search">"Proszę czekać. Szukanie aplikacji."</string>
 <string name="dialog_account_type_provided_by_user">"Z moim kontem Google"</string>
 <string name="dialog_account_type_predefined">"Z kontem Yalp (eksperymentalne)"</string>
 <string name="dialog_account_type_title">"W jaki sposób chciałbyś zalogować się do Google Play?"</string>
@@ -253,4 +247,30 @@ Nie rób tego z ciekawości. Może to zepsuć urządzenie. Zrób kopię zapasow�
 <string name="pref_download_deltas">"Aktualizacje delta"</string>
 <string name="pref_download_deltas_summary_off">"Pełny plik .apk jest pobierany za każdym razem"</string>
 <string name="pref_download_deltas_summary_on">"Tylko zmiany są pobierane podczas aktualizacji"</string>
+<string name="testing_program_review_dialog_content_hint">Napisz opinię o aplikacji</string>
+<string name="delete">Usuń</string>
+<string name="submit">Prześlij</string>
+<string name="done">Gotowe</string>
+<string name="availability_restriction_carrier">Ten element nie jest dostępny u Twojego operatora.</string>
+<string name="availability_restriction_country">Produkt jest niedostępny w Twoim kraju.</string>
+<string name="availability_restriction_country_or_carrier">Ten element nie jest dostępny w Twoim kraju lub sieci operatora.</string>
+<string name="availability_restriction_for_managed_account">Administrator nie przyznał Ci dostępu do tego elementu.</string>
+<string name="availability_restriction_generic">Produkt jest niedostępny.</string>
+<string name="availability_restriction_hardware">Twoje urządzenie nie jest zgodne z tym produktem.</string>
+<string name="availability_restriction_hardware_app">Twoje urządzenie nie jest zgodne z tą wersją.</string>
+<string name="availability_restriction_hardware_app_ram_generic">Ta aplikacja wymaga więcej pamięci RAM, niż ma Twoje urządzenie.</string>
+<string name="availability_restriction_missing_permission">Administrator nie zaakceptował uprawnień do tego elementu.</string>
+<string name="availability_restriction_not_in_group">Nie należysz do docelowej grupy użytkowników tego produktu.</string>
+<string name="flag_graphic_violence">Sceny przemocy</string>
+<string name="flag_harmful_prompt">Opisz szkody spowodowane na urządzeniu lub w danych:</string>
+<string name="flag_harmful_to_device">Szkodliwe dla urządzenia lub danych</string>
+<string name="flag_hateful_content">Obrażanie/szerzenie nienawiści</string>
+<string name="flag_improper_content_rating">Nieodpowiednia ocena treści</string>
+<string name="flag_other_concern_prompt">Opisz problem</string>
+<string name="flag_other_objection">Inne zastrzeżenia</string>
+<string name="flag_page_description">Powody, dla których uważasz, że zawartość lub aplikacja są nieodpowiednie:</string>
+<string name="flag_pharma_content">Nielegalna recepta lub inny lek</string>
+<string name="flag_sexual_content">Treści erotyczne</string>
+<string name="flagging_title">Zgłoś nieodpowiednią treść</string>
+<string name="content_flagged">Zastrzeżenia przesłane.</string>
 </resources>

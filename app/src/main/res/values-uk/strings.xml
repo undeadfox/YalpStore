@@ -27,12 +27,6 @@
 Натисніть \"Створити пароль\" для переходу до сторінки створення паролів додатку."</string>
 <string name="dialog_title_logout">"Вийти?"</string>
 <string name="dialog_message_logout">"Ви дійсно бажаєте вийти?"</string>
-<string name="dialog_title_reviews">"Отримання відгуків"</string>
-<string name="dialog_message_reviews">"Будь ласка, зачекайте. Отримання відгуків."</string>
-<string name="dialog_title_purchasing_app">"Завантаження додатку"</string>
-<string name="dialog_message_purchasing_app">"Будь ласка, зачекайте. Початок завантаження вказаного додатку."</string>
-<string name="dialog_title_loading_app_list_search">"Пошук"</string>
-<string name="dialog_message_loading_app_list_search">"Будь ласка, зачекайте. Пошук додатків."</string>
 <string name="dialog_account_type_provided_by_user">"З власним обліковим записом Google"</string>
 <string name="dialog_account_type_predefined">"Без облікового запису (експериментально)"</string>
 <string name="dialog_account_type_title">"Як увійти до Google Play Store?"</string>
@@ -253,4 +247,30 @@ Do it?"</string>
 <string name="testing_program_section_opted_out_title">"Станьте тестувальником бета-версії"</string>
 <string name="notification_not_privileged">"Install permission not granted"</string>
 <string name="about_paypal_label">"Пожертва:"</string>
+<string name="testing_program_review_dialog_content_hint">Залишіть відгук про додаток</string>
+<string name="delete">Видалити</string>
+<string name="done">Готово</string>
+<string name="submit">Надіслати</string>
+<string name="availability_restriction_carrier">Ця позиція не доступна для вашого оператора.</string>
+<string name="availability_restriction_country">Ця позиція не доступна у вашій країні.</string>
+<string name="availability_restriction_country_or_carrier">Ця позиція не доступна для вашої країни чи оператора.</string>
+<string name="availability_restriction_for_managed_account">Адміністратор заборонив доступ до цього продукту.</string>
+<string name="availability_restriction_generic">Ця позиція не доступна.</string>
+<string name="availability_restriction_hardware">Ваш пристрій не сумісний із цією позицією.</string>
+<string name="availability_restriction_hardware_app">Ваш пристрій не сумісний із цією версією.</string>
+<string name="availability_restriction_hardware_app_ram_generic">Для цього додатка потрібно більше оперативної пам’яті, ніж доступно на пристрої.</string>
+<string name="availability_restriction_missing_permission">Адміністратор не прийняв дозволи для цього продукту.</string>
+<string name="availability_restriction_not_in_group">Ви не входите в цільову групу для цієї позиції.</string>
+<string name="flag_graphic_violence">Зображення насильства</string>
+<string name="flag_harmful_prompt">Опишіть, яку шкоду завдано вашому пристрою чи даним:</string>
+<string name="flag_harmful_to_device">Шкодить пристрою або даним</string>
+<string name="flag_hateful_content">Агресивний чи образливий вміст</string>
+<string name="flag_improper_content_rating">Невідповідний рейтинг вмісту</string>
+<string name="flag_other_concern_prompt">Опишіть оскарження</string>
+<string name="flag_other_objection">Інше оскарження</string>
+<string name="flag_page_description">Чому ви вважаєте, що цей вміст або програма неприйнятні:</string>
+<string name="flag_pharma_content">Нелегальні медичні препарати</string>
+<string name="flag_sexual_content">Вміст сексуального характеру</string>
+<string name="flagging_title">Поскаржитися</string>
+<string name="content_flagged">Оскарження подано.</string>
 </resources>

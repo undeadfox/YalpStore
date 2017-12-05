@@ -29,12 +29,6 @@ Por favor, cria uma app-password dedicada à Yalp Store e usa-a para fazer login
 Carrega em \"criar password\" para seres redirecionado à página para a criares."</string>
 <string name="dialog_title_logout">"Terminar sessão ?"</string>
 <string name="dialog_message_logout">"Tens a certeza que queres terminar sessão?"</string>
-<string name="dialog_title_reviews">"A carregar críticas"</string>
-<string name="dialog_message_reviews">"Por favor aguarde. A carregar críticas."</string>
-<string name="dialog_title_purchasing_app">"A transferir aplicação"</string>
-<string name="dialog_message_purchasing_app">"Por favor aguarde. A iniciar transferência da aplicação selecionada."</string>
-<string name="dialog_title_loading_app_list_search">"A procurar.."</string>
-<string name="dialog_message_loading_app_list_search">"Por favor aguarde enquanto procuramos aplicações."</string>
 <string name="dialog_account_type_provided_by_user">"Com a minha conta Google"</string>
 <string name="dialog_account_type_predefined">"Com uma conta fornecida pela Yalp Store"</string>
 <string name="dialog_account_type_title">"Como quer iniciar sessão no Google Play Store?"</string>
@@ -257,4 +251,30 @@ Prosseguir mesmo assim?"</string>
 <string name="pref_download_deltas">"Atualizações Delta"</string>
 <string name="pref_download_deltas_summary_off">"Aplicação completa será transferida sempre"</string>
 <string name="pref_download_deltas_summary_on">"Apenas modificações serão transferidas durante atualizações"</string>
+<string name="testing_program_review_dialog_content_hint">Insira comentários sobre o app</string>
+<string name="delete">Excluir</string>
+<string name="submit">Enviar</string>
+<string name="done">Concluído</string>
+<string name="availability_restriction_carrier">Este item não está disponível em sua operadora.</string>
+<string name="availability_restriction_country">Este item não está disponível em seu país.</string>
+<string name="availability_restriction_country_or_carrier">Este item não está disponível em seu país ou sua operadora.</string>
+<string name="availability_restriction_for_managed_account">Seu administrador não concedeu a você o acesso a este item.</string>
+<string name="availability_restriction_generic">Este item não está disponível.</string>
+<string name="availability_restriction_hardware">Seu dispositivo não é compatível com este item.</string>
+<string name="availability_restriction_hardware_app">Seu dispositivo não é compatível com esta versão.</string>
+<string name="availability_restriction_hardware_app_ram_generic">Este app requer mais memória RAM do que a disponível no seu dispositivo.</string>
+<string name="availability_restriction_missing_permission">Seu administrador não aceitou permissões para este item.</string>
+<string name="availability_restriction_not_in_group">Você não está no grupo de destino deste item.</string>
+<string name="flag_graphic_violence">Imagens violentas</string>
+<string name="flag_harmful_prompt">Descreva o dano causado ao dispositivo ou aos dados:</string>
+<string name="flag_harmful_to_device">Prejudicial aos dados/dispositivo</string>
+<string name="flag_hateful_content">Conteúdo ofensivo ou que incita o ódio</string>
+<string name="flag_improper_content_rating">Classif. de conteúdo impróprio</string>
+<string name="flag_other_concern_prompt">Descrever objeção</string>
+<string name="flag_other_objection">Outra objeção</string>
+<string name="flag_page_description">Motivo pelo qual você acredita que este conteúdo ou app é questionável:</string>
+<string name="flag_pharma_content">Receita ilícita/outra droga</string>
+<string name="flag_sexual_content">Conteúdo sexual</string>
+<string name="flagging_title">Sinalizar como impróprio</string>
+<string name="content_flagged">Objeção enviada.</string>
 </resources>
