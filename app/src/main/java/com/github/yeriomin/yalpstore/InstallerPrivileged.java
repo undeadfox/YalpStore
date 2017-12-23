@@ -2,7 +2,6 @@ package com.github.yeriomin.yalpstore;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.IPackageInstallObserver;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -114,7 +113,7 @@ public class InstallerPrivileged extends InstallerBackground {
         @Override
         public void packageInstalled(String packageName, int returnCode) throws RemoteException {
             Log.i(getClass().getSimpleName(), "Installation of " + packageName + " complete with code " + returnCode);
-            sendBroadcast(packageName, true);
+            sendBroadcast(packageName, returnCode > 0);
             Looper.prepare();
             postInstallationResult(app, returnCode > 0);
             if (errors.containsKey(returnCode)) {
