@@ -1,10 +1,12 @@
 package com.github.yeriomin.yalpstore;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +18,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.EditText;
+import android.widget.SearchView;
+
+import com.github.yeriomin.yalpstore.fragment.FilterMenu;
 
 import static com.github.yeriomin.yalpstore.PlayStoreApiAuthenticator.PREFERENCE_EMAIL;
 
@@ -70,6 +75,10 @@ public abstract class YalpStoreActivity extends Activity {
         if (!TextUtils.isEmpty(PreferenceActivity.getString(this, PREFERENCE_EMAIL))) {
             menu.findItem(R.id.action_logout).setVisible(true);
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            addQueryTextListener(menu.findItem(R.id.action_search));
+        }
+        new FilterMenu(this).onCreateOptionsMenu(menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -101,6 +110,15 @@ public abstract class YalpStoreActivity extends Activity {
                 break;
             case R.id.action_bug_report:
                 startActivity(new Intent(this, BugReportActivity.class));
+                break;
+            case R.id.filter_system_apps:
+            case R.id.filter_apps_with_ads:
+            case R.id.filter_paid_apps:
+            case R.id.filter_gsf_dependent_apps:
+            case R.id.filter_category:
+            case R.id.filter_rating:
+            case R.id.filter_downloads:
+                new FilterMenu(this).onOptionsItemSelected(item);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -141,6 +159,31 @@ public abstract class YalpStoreActivity extends Activity {
                 PERMISSIONS_REQUEST_CODE
             );
         }
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private void addQueryTextListener(MenuItem searchItem) {
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        if (null != searchManager) {
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        }
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Intent i = new Intent(YalpStoreActivity.this, SearchActivity.class);
+                i.setAction(Intent.ACTION_SEARCH);
+                i.putExtra(SearchManager.QUERY, query);
+                startActivity(i);
+                return false;
+            }
+        });
     }
 
     private AlertDialog showLogOutDialog() {

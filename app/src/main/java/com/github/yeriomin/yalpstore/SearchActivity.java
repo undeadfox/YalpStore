@@ -6,7 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
 
+import com.github.yeriomin.yalpstore.fragment.FilterMenu;
 import com.github.yeriomin.yalpstore.model.App;
 import com.github.yeriomin.yalpstore.task.playstore.DetailsTask;
 import com.github.yeriomin.yalpstore.task.playstore.SearchTask;
@@ -15,8 +17,9 @@ import java.util.regex.Pattern;
 
 public class SearchActivity extends EndlessScrollActivity {
 
+    public static final String PUB_PREFIX = "pub:";
+
     private String query;
-    private String categoryId = CategoryManager.TOP;
 
     static protected boolean actionIs(Intent intent, String action) {
         return null != intent && null != intent.getAction() && intent.getAction().equals(action);
@@ -36,9 +39,8 @@ public class SearchActivity extends EndlessScrollActivity {
         Log.i(getClass().getSimpleName(), "Searching: " + newQuery);
         if (null != newQuery && !newQuery.equals(this.query)) {
             clearApps();
-            this.categoryId = CategoryManager.TOP;
             this.query = newQuery;
-            setTitle(getString(R.string.activity_title_search, query));
+            setTitle(getTitleString());
             if (looksLikeAPackageId(query)) {
                 Log.i(getClass().getSimpleName(), query + " looks like a package id");
                 checkPackageId(query);
@@ -48,20 +50,26 @@ public class SearchActivity extends EndlessScrollActivity {
         }
     }
 
-    public void setCategoryId(String categoryId) {
-        if (!categoryId.equals(this.categoryId)) {
-            this.categoryId = categoryId;
-            clearApps();
-            loadApps();
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        boolean result = super.onCreateOptionsMenu(menu);
+        menu.findItem(R.id.filter_category).setVisible(true);
+        return result;
     }
 
     @Override
     protected SearchTask getTask() {
         SearchTask task = new SearchTask(iterator);
         task.setQuery(query);
-        task.setCategoryId(categoryId);
+        task.setFilter(new FilterMenu(this).getFilterPreferences());
         return task;
+    }
+
+    private String getTitleString() {
+        return query.startsWith(PUB_PREFIX)
+            ? getString(R.string.apps_by, query.substring(PUB_PREFIX.length()))
+            : getString(R.string.activity_title_search, query)
+        ;
     }
 
     private String getQuery(Intent intent) {
@@ -108,9 +116,11 @@ public class SearchActivity extends EndlessScrollActivity {
         @Override
         protected void onPostExecute(App app) {
             super.onPostExecute(app);
-            if (null != app) {
+            if (null != app && ContextUtil.isAlive(activity)) {
                 DetailsActivity.app = app;
                 showPackageIdDialog(app.getPackageName());
+            } else {
+                activity.finish();
             }
         }
 
