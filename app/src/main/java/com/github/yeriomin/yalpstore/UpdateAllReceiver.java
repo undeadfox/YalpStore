@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.text.TextUtils;
-import android.widget.Button;
+import android.view.View;
+
+import com.github.yeriomin.yalpstore.view.UpdatableAppsButtonAdapter;
 
 public class UpdateAllReceiver extends BroadcastReceiver {
 
@@ -23,9 +25,7 @@ public class UpdateAllReceiver extends BroadcastReceiver {
         filter.addAction(ACTION_ALL_UPDATES_COMPLETE);
         filter.addAction(ACTION_APP_UPDATE_COMPLETE);
         activity.registerReceiver(this, filter);
-        if (!((YalpStoreApplication) activity.getApplication()).isBackgroundUpdating()) {
-            enableButton();
-        }
+        initButton();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class UpdateAllReceiver extends BroadcastReceiver {
         }
         if (intent.getAction().equals(ACTION_ALL_UPDATES_COMPLETE)) {
             ((YalpStoreApplication) activity.getApplication()).setBackgroundUpdating(false);
-            enableButton();
+            initButton();
         } else if (intent.getAction().equals(ACTION_APP_UPDATE_COMPLETE)) {
             processAppUpdate(
                 intent.getStringExtra(EXTRA_PACKAGE_NAME),
@@ -44,11 +44,10 @@ public class UpdateAllReceiver extends BroadcastReceiver {
         }
     }
 
-    private void enableButton() {
-        Button button = activity.findViewById(R.id.main_button);
+    private void initButton() {
+        View button = activity.findViewById(R.id.main_button);
         if (null != button) {
-            button.setEnabled(true);
-            button.setText(R.string.list_update_all);
+            new UpdatableAppsButtonAdapter(button).init(activity);
         }
     }
 

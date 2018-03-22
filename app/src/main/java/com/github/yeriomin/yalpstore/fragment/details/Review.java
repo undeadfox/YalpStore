@@ -13,12 +13,13 @@ import com.github.yeriomin.yalpstore.DetailsActivity;
 import com.github.yeriomin.yalpstore.PlayStoreApiAuthenticator;
 import com.github.yeriomin.yalpstore.R;
 import com.github.yeriomin.yalpstore.ReviewStorageIterator;
-import com.github.yeriomin.yalpstore.UserReviewDialogBuilder;
 import com.github.yeriomin.yalpstore.model.App;
 import com.github.yeriomin.yalpstore.model.ImageSource;
 import com.github.yeriomin.yalpstore.task.LoadImageTask;
 import com.github.yeriomin.yalpstore.task.playstore.ReviewDeleteTask;
 import com.github.yeriomin.yalpstore.task.playstore.ReviewLoadTask;
+import com.github.yeriomin.yalpstore.view.UriOnClickListener;
+import com.github.yeriomin.yalpstore.view.UserReviewDialogBuilder;
 
 import java.util.List;
 
@@ -41,25 +42,26 @@ public class Review extends Abstract {
             return;
         }
 
-        initExpandableGroup(R.id.reviews_header, R.id.reviews_container, new View.OnClickListener() {
+        activity.findViewById(R.id.reviews_panel).setVisibility(View.VISIBLE);
+        activity.findViewById(R.id.reviews_panel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getTask(true).execute();
+                initReviewListControls();
+
+                setText(R.id.average_rating, R.string.details_rating, app.getRating().getAverage());
+                for (int starNum = 1; starNum <= 5; starNum++) {
+                    setText(averageStarIds[starNum - 1], R.string.details_rating_specific, starNum, app.getRating().getStars(starNum));
+                }
+
+                activity.findViewById(R.id.user_review_container).setVisibility(isReviewable(app) ? View.VISIBLE : View.GONE);
+                com.github.yeriomin.yalpstore.model.Review review = app.getUserReview();
+                initUserReviewControls(app);
+                if (null != review) {
+                    fillUserReview(review);
+                }
             }
         });
-        initReviewListControls();
-
-        setText(R.id.average_rating, R.string.details_rating, app.getRating().getAverage());
-        for (int starNum = 1; starNum <= 5; starNum++) {
-            setText(averageStarIds[starNum - 1], R.string.details_rating_specific, starNum, app.getRating().getStars(starNum));
-        }
-
-        activity.findViewById(R.id.user_review_container).setVisibility(isReviewable(app) ? View.VISIBLE : View.GONE);
-        com.github.yeriomin.yalpstore.model.Review review = app.getUserReview();
-        initUserReviewControls(app);
-        if (null != review) {
-            fillUserReview(review);
-        }
     }
 
     private boolean isReviewable(App app) {
@@ -128,6 +130,7 @@ public class Review extends Abstract {
             review.getTitle()
         ));
         ((TextView) reviewLayout.findViewById(R.id.comment)).setText(review.getComment());
+        reviewLayout.setOnClickListener(new UriOnClickListener(activity, review.getGooglePlusUrl()));
         parent.addView(reviewLayout);
         new LoadImageTask((ImageView) reviewLayout.findViewById(R.id.avatar)).execute(new ImageSource(review.getUserPhotoUrl()));
     }

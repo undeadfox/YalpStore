@@ -1,7 +1,6 @@
 package com.github.yeriomin.yalpstore;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,19 +10,39 @@ import android.os.Build;
 import android.util.Log;
 
 import com.github.yeriomin.yalpstore.model.App;
+import com.github.yeriomin.yalpstore.notification.DownloadChecksumService;
 import com.github.yeriomin.yalpstore.notification.IgnoreUpdatesService;
 import com.github.yeriomin.yalpstore.notification.NotificationBuilder;
 import com.github.yeriomin.yalpstore.notification.NotificationManagerWrapper;
+import com.github.yeriomin.yalpstore.view.DialogWrapper;
+import com.github.yeriomin.yalpstore.view.DialogWrapperAbstract;
 
 import java.io.File;
+import java.security.MessageDigest;
 
 public abstract class InstallerAbstract {
 
     protected Context context;
     protected boolean background;
 
-    static public Intent getOpenApkIntent(Context context, File file) {
+    static public Intent getCheckAndOpenApkIntent(Context context, App app) {
+        return PreferenceUtil.getBoolean(context, PreferenceUtil.PREFERENCE_DOWNLOAD_INTERNAL_STORAGE)
+            ? getDownloadChecksumServiceIntent(context, app)
+            : getOpenApkIntent(context, app)
+        ;
+    }
+
+    static private Intent getDownloadChecksumServiceIntent(Context context, App app) {
+        return new Intent(context, DownloadChecksumService.class)
+            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            .setAction(Intent.ACTION_INSTALL_PACKAGE + System.currentTimeMillis())
+            .putExtra(DownloadChecksumService.PACKAGE_NAME, app.getPackageName())
+        ;
+    }
+
+    static public Intent getOpenApkIntent(Context context, App app) {
         Intent intent;
+        File file = Paths.getApkPath(context, app.getPackageName(), app.getVersionCode());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
             intent.setData(FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".fileprovider", file));
@@ -64,7 +83,7 @@ public abstract class InstallerAbstract {
             return false;
         }
         if (!new ApkSignatureVerifier(context).match(app.getPackageName(), apkPath)) {
-            Log.i(getClass().getSimpleName(), "Signature mismatch for " + app.getPackageName());
+            Log.w(getClass().getSimpleName(), "Signature mismatch for " + app.getPackageName());
             ((YalpStoreApplication) context.getApplicationContext()).removePendingUpdate(app.getPackageName());
             if (ContextUtil.isAlive(context)) {
                 getSignatureMismatchDialog(app).show();
@@ -72,6 +91,24 @@ public abstract class InstallerAbstract {
                 notifySignatureMismatch(app);
             }
             return false;
+        }
+        if (PreferenceUtil.getBoolean(context, PreferenceUtil.PREFERENCE_DOWNLOAD_INTERNAL_STORAGE)) {
+            byte[] downloadedFileChecksum = DownloadState.get(app.getPackageName()).getApkChecksum();
+            byte[] existingFileChecksum = Util.getFileChecksum(apkPath);
+            if (null == downloadedFileChecksum
+                || null == existingFileChecksum
+                || !MessageDigest.isEqual(downloadedFileChecksum, existingFileChecksum)
+            ) {
+                Log.e(getClass().getSimpleName(), "Checksums of the existing file and the originally downloaded file are not the same for " + app.getPackageName());
+                ((YalpStoreApplication) context.getApplicationContext()).removePendingUpdate(app.getPackageName());
+                notifyAndToast(
+                    R.string.notification_file_verification_failed,
+                    R.string.notification_file_verification_failed,
+                    app
+                );
+                apkPath.delete();
+                return false;
+            }
         }
         return true;
     }
@@ -93,8 +130,8 @@ public abstract class InstallerAbstract {
         context.sendBroadcast(intent);
     }
 
-    private AlertDialog getSignatureMismatchDialog(final App app) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    private DialogWrapperAbstract getSignatureMismatchDialog(final App app) {
+        DialogWrapperAbstract builder = new DialogWrapper((Activity) context);
         builder
             .setMessage(R.string.details_signature_mismatch)
             .setPositiveButton(
@@ -131,10 +168,8 @@ public abstract class InstallerAbstract {
     }
 
     private void showNotification(int notificationStringId, App app) {
-        File file = Paths.getApkPath(context, app.getPackageName(), app.getVersionCode());
-        Intent openApkIntent = getOpenApkIntent(context, file);
         NotificationBuilder builder = NotificationManagerWrapper.getBuilder(context)
-            .setIntent(openApkIntent)
+            .setIntent(getCheckAndOpenApkIntent(context, app))
             .setTitle(app.getDisplayName())
             .setMessage(context.getString(notificationStringId))
         ;

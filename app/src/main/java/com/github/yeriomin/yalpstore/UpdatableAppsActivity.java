@@ -2,11 +2,9 @@ package com.github.yeriomin.yalpstore;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.yeriomin.yalpstore.model.App;
@@ -14,6 +12,7 @@ import com.github.yeriomin.yalpstore.task.AppListValidityCheckTask;
 import com.github.yeriomin.yalpstore.task.playstore.ForegroundUpdatableAppsTask;
 import com.github.yeriomin.yalpstore.view.ListItem;
 import com.github.yeriomin.yalpstore.view.UpdatableAppBadge;
+import com.github.yeriomin.yalpstore.view.UpdatableAppsButtonAdapter;
 
 public class UpdatableAppsActivity extends AppListActivity {
 
@@ -58,7 +57,6 @@ public class UpdatableAppsActivity extends AppListActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         if (YalpStorePermissionManager.isGranted(requestCode, permissions, grantResults)) {
-            Log.i(getClass().getSimpleName(), "User granted the write permission");
             launchUpdateAll();
         }
     }
@@ -81,7 +79,7 @@ public class UpdatableAppsActivity extends AppListActivity {
     }
 
     @Override
-    protected ListItem getListItem(App app) {
+    protected ListItem buildListItem(App app) {
         UpdatableAppBadge appBadge = new UpdatableAppBadge();
         appBadge.setApp(app);
         return appBadge;
@@ -106,9 +104,7 @@ public class UpdatableAppsActivity extends AppListActivity {
     public void launchUpdateAll() {
         ((YalpStoreApplication) getApplicationContext()).setBackgroundUpdating(true);
         new UpdateChecker().onReceive(UpdatableAppsActivity.this, getIntent());
-        Button button = findViewById(R.id.main_button);
-        button.setEnabled(false);
-        button.setText(R.string.list_updating);
+        new UpdatableAppsButtonAdapter(findViewById(R.id.main_button)).setUpdating();
     }
 }
 

@@ -13,6 +13,8 @@ import com.github.yeriomin.yalpstore.ClusterActivity;
 import com.github.yeriomin.yalpstore.DetailsActivity;
 import com.github.yeriomin.yalpstore.R;
 import com.github.yeriomin.yalpstore.SearchActivity;
+import com.github.yeriomin.yalpstore.SearchActivityAbstract;
+import com.github.yeriomin.yalpstore.Util;
 import com.github.yeriomin.yalpstore.model.App;
 
 public class AppLists extends Abstract {
@@ -23,8 +25,9 @@ public class AppLists extends Abstract {
 
     @Override
     public void draw() {
-        LinearLayout relatedLinksLayout = (LinearLayout) activity.findViewById(R.id.related_links);
+        LinearLayout relatedLinksLayout = activity.findViewById(R.id.related_links);
         boolean developerLinkFound = false;
+        relatedLinksLayout.removeAllViews();
         for (final String label: app.getRelatedLinks().keySet()) {
             relatedLinksLayout.setVisibility(View.VISIBLE);
             relatedLinksLayout.addView(buildLinkView(label, app.getRelatedLinks().get(label)));
@@ -39,10 +42,12 @@ public class AppLists extends Abstract {
 
     private TextView buildLinkView(final String label, final String url) {
         TextView linkView = new TextView(activity);
-        linkView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_chevron_right, 0, 0, 0);
+        linkView.setHeight(Util.getPx(activity, 48));
+        linkView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_link, 0, 0, 0);
+        linkView.setCompoundDrawablePadding(Util.getPx(activity, 6));
         linkView.setText(label);
-        linkView.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
-        linkView.setPadding(0,6,0,0);
+        linkView.setTextSize(TypedValue.COMPLEX_UNIT_SP,18);
+        linkView.setPadding(Util.getPx(activity, 16), 0, Util.getPx(activity, 16), 0);
         linkView.setGravity(Gravity.CENTER_VERTICAL);
         linkView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +68,7 @@ public class AppLists extends Abstract {
                 Intent intent = new Intent(activity, SearchActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setAction(Intent.ACTION_SEARCH);
-                intent.putExtra(SearchManager.QUERY, SearchActivity.PUB_PREFIX + app.getDeveloperName());
+                intent.putExtra(SearchManager.QUERY, SearchActivityAbstract.PUB_PREFIX + app.getDeveloperName());
                 activity.startActivity(intent);
             }
         });

@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.1'
+    buildToolsVersion '27.0.3'
 
     def getVersionName = { ->
         def stdout = new ByteArrayOutputStream()
@@ -27,14 +27,28 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "minApi"
+    productFlavors {
+        legacy {
+            dimension "minApi"
+        }
+        contemporary {
+            dimension "minApi"
+            minSdkVersion 14
+            versionCode (1000 + android.defaultConfig.versionCode)
+            applicationIdSuffix "plus"
+        }
+    }
     lintOptions {
         warning 'MissingTranslation','GetLocales','VectorDrawableCompat'
     }
 }
 
 dependencies {
+    contemporaryImplementation 'com.android.support:design:27.1.0'
+    contemporaryImplementation 'com.android.support:appcompat-v7:27.1.0'
     implementation 'commons-net:commons-net:3.5'
     implementation 'com.nothome:javaxdelta:2.0.1'
-    implementation 'com.github.yeriomin:play-store-api:0.32'
+    implementation 'com.github.yeriomin:play-store-api:0.36'
     implementation 'eu.chainfire:libsuperuser:1.0.0.201608240809'
 }

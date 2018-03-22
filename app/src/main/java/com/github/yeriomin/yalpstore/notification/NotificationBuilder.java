@@ -27,6 +27,10 @@ abstract public class NotificationBuilder {
     }
 
     protected PendingIntent getPendingIntent(Intent intent) {
-        return PendingIntent.getActivity(context, 1, intent, 0);
+        return isServiceIntent(intent) ? PendingIntent.getService(context, 1, intent, 0) : PendingIntent.getActivity(context, 1, intent, 0);
+    }
+
+    private boolean isServiceIntent(Intent intent) {
+        return null != intent.getComponent() && intent.getComponent().getClassName().contains("Service");
     }
 }

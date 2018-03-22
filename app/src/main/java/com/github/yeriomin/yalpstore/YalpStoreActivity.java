@@ -1,28 +1,22 @@
 package com.github.yeriomin.yalpstore;
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.widget.EditText;
-import android.widget.SearchView;
 
 import com.github.yeriomin.yalpstore.fragment.FilterMenu;
+import com.github.yeriomin.yalpstore.view.DialogWrapper;
+import com.github.yeriomin.yalpstore.view.DialogWrapperAbstract;
 
-import static com.github.yeriomin.yalpstore.PlayStoreApiAuthenticator.PREFERENCE_EMAIL;
-
-public abstract class YalpStoreActivity extends Activity {
+public abstract class YalpStoreActivity extends BaseActivity {
 
     static protected boolean logout = false;
 
@@ -37,7 +31,7 @@ public abstract class YalpStoreActivity extends Activity {
         if (((YalpStoreApplication) getApplication()).isTv()) {
             requestWindowFeature(Window.FEATURE_OPTIONS_PANEL);
         }
-        ThemeManager.setTheme(this);
+        new ThemeManager().setTheme(this);
         super.onCreate(savedInstanceState);
     }
 
@@ -67,13 +61,7 @@ public abstract class YalpStoreActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        if (!TextUtils.isEmpty(PreferenceActivity.getString(this, PREFERENCE_EMAIL))) {
-            menu.findItem(R.id.action_logout).setVisible(true);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            addQueryTextListener(menu.findItem(R.id.action_search));
-        }
+        getMenuInflater().inflate(R.menu.menu_bar, menu);
         new FilterMenu(this).onCreateOptionsMenu(menu);
         return super.onCreateOptionsMenu(menu);
     }
@@ -116,8 +104,10 @@ public abstract class YalpStoreActivity extends Activity {
             case R.id.filter_downloads:
                 new FilterMenu(this).onOptionsItemSelected(item);
                 break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 
     @Override
@@ -132,34 +122,8 @@ public abstract class YalpStoreActivity extends Activity {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private void addQueryTextListener(MenuItem searchItem) {
-        SearchView searchView = (SearchView) searchItem.getActionView();
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        if (null != searchManager) {
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            searchView.setQueryHint(getString(R.string.search_title));
-        }
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Intent i = new Intent(YalpStoreActivity.this, SearchActivity.class);
-                i.setAction(Intent.ACTION_SEARCH);
-                i.putExtra(SearchManager.QUERY, query);
-                startActivity(i);
-                return false;
-            }
-        });
-    }
-
-    private AlertDialog showLogOutDialog() {
-        return new AlertDialog.Builder(this)
+    private DialogWrapperAbstract showLogOutDialog() {
+        return new DialogWrapper(this)
             .setMessage(R.string.dialog_message_logout)
             .setTitle(R.string.dialog_title_logout)
             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -171,12 +135,13 @@ public abstract class YalpStoreActivity extends Activity {
                 }
             })
             .setNegativeButton(android.R.string.cancel, null)
-            .show();
+            .show()
+        ;
     }
 
-    private AlertDialog showFallbackSearchDialog() {
+    private DialogWrapperAbstract showFallbackSearchDialog() {
         final EditText textView = new EditText(this);
-        return new AlertDialog.Builder(this)
+        return new DialogWrapper(this)
             .setView(textView)
             .setPositiveButton(android.R.string.search_go, new DialogInterface.OnClickListener() {
                 @Override
@@ -188,7 +153,8 @@ public abstract class YalpStoreActivity extends Activity {
                 }
             })
             .setNegativeButton(android.R.string.cancel, null)
-            .show();
+            .show()
+        ;
     }
 
     protected void finishAll() {

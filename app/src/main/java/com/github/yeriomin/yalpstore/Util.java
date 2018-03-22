@@ -1,23 +1,23 @@
 package com.github.yeriomin.yalpstore;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
 
 import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.text.DecimalFormat;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 public class Util {
 
-    private static final String DELIMITER = ",";
+    private static float DP_PX_RATIO = 0.0f;
     private static final Map<Integer, String> siPrefixes = new HashMap<>();
     static {
         siPrefixes.put(0, "");
@@ -61,17 +61,6 @@ public class Util {
         return map;
     }
 
-    static public Set<String> getStringSet(Context context, String key) {
-        return new HashSet<>(Arrays.asList(TextUtils.split(
-            PreferenceManager.getDefaultSharedPreferences(context).getString(key, ""),
-            DELIMITER
-        )));
-    }
-
-    static public void putStringSet(Context context, String key, Set<String> set) {
-        PreferenceManager.getDefaultSharedPreferences(context).edit().putString(key, TextUtils.join(DELIMITER, set)).commit();
-    }
-
     static public int parseInt(String intAsString, int defaultValue) {
         try {
             return Integer.parseInt(intAsString);
@@ -99,5 +88,42 @@ public class Util {
             order += 3;
         }
         return tempValue + siPrefixes.get(order);
+    }
+
+    static public String readableFileSize(long size) {
+        if(size <= 0) return "0";
+        final String[] units = new String[] { "B", "kB", "MB", "GB", "TB" };
+        int digitGroups = (int) (Math.log10(size)/Math.log10(1024));
+        return new DecimalFormat("#,##0.#").format(size/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+    }
+
+    static public int getPx(Context context, int dp) {
+        if (DP_PX_RATIO == 0.0f) {
+            DP_PX_RATIO = context.getResources().getDisplayMetrics().density;
+        }
+        return (int) (dp * DP_PX_RATIO);
+    }
+
+    static public byte[] getFileChecksum(File file) {
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            return null;
+        }
+        FileInputStream inputStream = null;
+        try {
+            byte[] buffer = new byte[2048];
+            int bytesRead;
+            inputStream = new FileInputStream(file);
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                md.update(buffer, 0, bytesRead);
+            }
+        } catch (IOException e) {
+            return null;
+        } finally {
+            closeSilently(inputStream);
+        }
+        return md.digest();
     }
 }
