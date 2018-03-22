@@ -25,14 +25,18 @@ public class App implements Comparable<App> {
     private long size;
     private int installs;
     private Rating rating = new Rating();
+    private String categoryIconUrl;
+    private ImageSource pageBackgroundImage;
     private String iconUrl;
     private String videoUrl;
     private String changes;
     private String developerName;
     private String description;
+    private String shortDescription;
     private Set<String> permissions = new HashSet<>();
     private boolean isInstalled;
     private boolean isFree;
+    private boolean isAd;
     private List<String> screenshotUrls = new ArrayList<>();
     private Review userReview;
     private String categoryId;
@@ -136,6 +140,22 @@ public class App implements Comparable<App> {
         return rating;
     }
 
+    public String getCategoryIconUrl() {
+        return categoryIconUrl;
+    }
+
+    public void setCategoryIconUrl(String categoryIconUrl) {
+        this.categoryIconUrl = categoryIconUrl;
+    }
+
+    public ImageSource getPageBackgroundImage() {
+        return pageBackgroundImage;
+    }
+
+    public void setPageBackgroundImage(ImageSource pageBackgroundImage) {
+        this.pageBackgroundImage = pageBackgroundImage;
+    }
+
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
     }
@@ -187,6 +207,14 @@ public class App implements Comparable<App> {
         return permissions;
     }
 
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
+    }
+
     public void setPermissions(Collection<String> permissions) {
         this.permissions = new HashSet<>(permissions);
     }
@@ -212,6 +240,14 @@ public class App implements Comparable<App> {
 
     public void setFree(boolean free) {
         isFree = free;
+    }
+
+    public boolean isAd() {
+        return isAd;
+    }
+
+    public void setAd(boolean ad) {
+        isAd = ad;
     }
 
     public List<String> getScreenshotUrls() {

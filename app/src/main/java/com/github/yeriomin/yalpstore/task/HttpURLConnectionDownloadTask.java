@@ -14,6 +14,7 @@ import com.github.yeriomin.yalpstore.DownloadState;
 import com.github.yeriomin.yalpstore.R;
 import com.github.yeriomin.yalpstore.Util;
 import com.github.yeriomin.yalpstore.notification.CancelDownloadService;
+import com.github.yeriomin.yalpstore.notification.NotificationBuilder;
 import com.github.yeriomin.yalpstore.notification.NotificationManagerWrapper;
 
 import java.io.File;
@@ -24,6 +25,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class HttpURLConnectionDownloadTask extends AsyncTask<String, Long, Boolean> {
 
@@ -33,6 +36,7 @@ public class HttpURLConnectionDownloadTask extends AsyncTask<String, Long, Boole
     private Context context;
     private File targetFile;
     private long downloadId;
+    private NotificationBuilder notificationBuilder;
 
     public void setContext(Context context) {
         this.context = context;
@@ -58,7 +62,6 @@ public class HttpURLConnectionDownloadTask extends AsyncTask<String, Long, Boole
 
     @Override
     protected void onPostExecute(Boolean result) {
-        super.onPostExecute(result);
         new NotificationManagerWrapper(context).cancel(getNotificationTitle());
         Intent intent = new Intent();
         intent.setAction((null != result && result) ? DownloadManagerInterface.ACTION_DOWNLOAD_COMPLETE : DownloadManagerInterface.ACTION_DOWNLOAD_CANCELLED);
@@ -78,7 +81,6 @@ public class HttpURLConnectionDownloadTask extends AsyncTask<String, Long, Boole
 
     @Override
     protected void onCancelled() {
-        super.onCancelled();
         Log.i(getClass().getSimpleName(), "Cancelled download " + downloadId);
         targetFile.delete();
         onPostExecute(false);
@@ -101,29 +103,40 @@ public class HttpURLConnectionDownloadTask extends AsyncTask<String, Long, Boole
             return false;
         }
 
-        if (!writeToFile(in, fileSize)) {
+        byte[] checksum = writeToFile(in, fileSize);
+        if (null == checksum) {
+            DownloadManagerFake.putStatus(downloadId, DownloadManagerInterface.ERROR_FILE_ERROR);
             return false;
         }
+        if (targetFile.getAbsolutePath().endsWith(".apk")) {
+            DownloadState.get(downloadId).setApkChecksum(checksum);
+        }
         connection.disconnect();
+
         DownloadManagerFake.putStatus(downloadId, DownloadManagerInterface.SUCCESS);
         return true;
     }
 
     private void notifyProgress(long progress, long max) {
         String title = getNotificationTitle();
-        new NotificationManagerWrapper(context).show(
-            title,
-            NotificationManagerWrapper.getBuilder(context)
-                .setMessage(context.getString(
-                    R.string.notification_download_progress,
-                    Formatter.formatFileSize(context, progress),
-                    Formatter.formatFileSize(context, max)
-                ))
+        if (null == notificationBuilder) {
+            notificationBuilder = NotificationManagerWrapper.getBuilder(context)
                 .setTitle(title)
                 .setIntent(new Intent())
-                .setProgress((int) max, (int) progress)
                 .addAction(R.drawable.ic_cancel, android.R.string.cancel, getCancelIntent())
-                .build()
+            ;
+        }
+        notificationBuilder
+            .setMessage(context.getString(
+                R.string.notification_download_progress,
+                Formatter.formatFileSize(context, progress),
+                Formatter.formatFileSize(context, max)
+            ))
+            .setProgress((int) max, (int) progress)
+        ;
+        new NotificationManagerWrapper(context).show(
+            title,
+            notificationBuilder.build()
         );
     }
 
@@ -145,42 +158,49 @@ public class HttpURLConnectionDownloadTask extends AsyncTask<String, Long, Boole
         return displayName;
     }
 
-    private boolean writeToFile(InputStream in, long fileSize) {
+    private byte[] writeToFile(InputStream in, long fileSize) {
         OutputStream out;
         try {
             out = new FileOutputStream(targetFile);
         } catch (FileNotFoundException e) {
             //  Should be checked before launching this task
-            return false;
+            return null;
         }
 
         try {
-            copyStream(in, out, fileSize);
+            return copyStream(in, out, fileSize);
         } catch (IOException e) {
             Log.e(getClass().getSimpleName(), "Could not read: " + e.getMessage());
             DownloadManagerFake.putStatus(downloadId, DownloadManagerInterface.ERROR_HTTP_DATA_ERROR);
             Util.closeSilently(out);
             targetFile.delete();
-            return false;
+            return null;
         } finally {
             Util.closeSilently(in);
             Util.closeSilently(out);
         }
-        return true;
     }
 
-    private void copyStream(InputStream in, OutputStream out, long fileSize) throws IOException {
+    private byte[] copyStream(InputStream in, OutputStream out, long fileSize) throws IOException {
         byte[] buffer = new byte[2048];
         int bytesRead;
         long totalBytesRead = 0;
         long lastProgressUpdate = 0;
+
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            return null;
+        }
         while ((bytesRead = in.read(buffer)) != -1) {
+            md.update(buffer, 0, bytesRead);
             totalBytesRead += bytesRead;
             if (lastProgressUpdate + PROGRESS_INTERVAL < System.currentTimeMillis()) {
                 lastProgressUpdate = System.currentTimeMillis();
                 if (DownloadState.get(downloadId).isCancelled(downloadId)) {
-                    cancel(false);
-                    return;
+                    cancel(true);
+                    return null;
                 } else {
                     publishProgress(totalBytesRead, fileSize);
                 }
@@ -192,8 +212,9 @@ public class HttpURLConnectionDownloadTask extends AsyncTask<String, Long, Boole
                 DownloadManagerFake.putStatus(downloadId, DownloadManagerInterface.ERROR_FILE_ERROR);
                 Util.closeSilently(out);
                 targetFile.delete();
-                return;
+                return null;
             }
         }
+        return md.digest();
     }
 }

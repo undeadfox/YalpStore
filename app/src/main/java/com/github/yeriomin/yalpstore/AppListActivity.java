@@ -1,7 +1,6 @@
 package com.github.yeriomin.yalpstore;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,23 +23,35 @@ abstract public class AppListActivity extends YalpStoreActivity {
 
     protected ListView listView;
     protected Map<String, ListItem> listItems = new HashMap<>();
+    protected AppListDownloadReceiver appListDownloadReceiver;
 
     abstract public void loadApps();
-    abstract protected ListItem getListItem(App app);
+    abstract protected ListItem buildListItem(App app);
+
+    public ListItem getListItem(String packageName) {
+        return listItems.get(packageName);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.applist_activity_layout);
 
-        getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                DetailsActivity.app = getAppByListPosition(position);
-                startActivity(DetailsActivity.getDetailsIntent(AppListActivity.this, DetailsActivity.app.getPackageName()));
-            }
-        });
+        onContentChanged();
+        getListView().setOnItemClickListener(new OnAppClickListener(this));
         registerForContextMenu(getListView());
+    }
+
+    @Override
+    protected void onPause() {
+        unregisterReceiver(appListDownloadReceiver);
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        appListDownloadReceiver = new AppListDownloadReceiver(this);
+        super.onResume();
     }
 
     @Override
@@ -79,7 +90,6 @@ abstract public class AppListActivity extends YalpStoreActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         if (YalpStorePermissionManager.isGranted(requestCode, permissions, grantResults)) {
-            Log.i(getClass().getSimpleName(), "User granted the write permission");
             new ButtonDownload(this, DetailsActivity.app).download();
         }
     }
@@ -88,7 +98,10 @@ abstract public class AppListActivity extends YalpStoreActivity {
     public void onContentChanged() {
         super.onContentChanged();
         View emptyView = findViewById(android.R.id.empty);
-        listView = (ListView) findViewById(android.R.id.list);
+        listView = findViewById(android.R.id.list);
+        if (null == listView) {
+            return;
+        }
         if (emptyView != null) {
             listView.setEmptyView(emptyView);
         }
@@ -97,7 +110,7 @@ abstract public class AppListActivity extends YalpStoreActivity {
         }
     }
 
-    protected App getAppByListPosition(int position) {
+    public App getAppByListPosition(int position) {
         ListItem listItem = (ListItem) getListView().getItemAtPosition(position);
         if (null == listItem || !(listItem instanceof AppBadge)) {
             return null;
@@ -113,7 +126,7 @@ abstract public class AppListActivity extends YalpStoreActivity {
         AppListAdapter adapter = (AppListAdapter) getListView().getAdapter();
         adapter.setNotifyOnChange(false);
         for (App app: appsToAdd) {
-            ListItem listItem = getListItem(app);
+            ListItem listItem = buildListItem(app);
             listItems.put(app.getPackageName(), listItem);
             adapter.add(listItem);
         }

@@ -16,11 +16,14 @@ import com.github.yeriomin.yalpstore.DeviceInfoActivity;
 import com.github.yeriomin.yalpstore.OnListPreferenceChangeListener;
 import com.github.yeriomin.yalpstore.PlayStoreApiAuthenticator;
 import com.github.yeriomin.yalpstore.PreferenceActivity;
+import com.github.yeriomin.yalpstore.PreferenceUtil;
 import com.github.yeriomin.yalpstore.R;
 import com.github.yeriomin.yalpstore.SpoofDeviceManager;
 import com.github.yeriomin.yalpstore.Util;
 import com.github.yeriomin.yalpstore.YalpStoreActivity;
 import com.github.yeriomin.yalpstore.bugreport.BugReportService;
+import com.github.yeriomin.yalpstore.view.DialogWrapper;
+import com.github.yeriomin.yalpstore.view.DialogWrapperAbstract;
 
 import java.util.LinkedHashMap;
 import java.util.Locale;
@@ -43,7 +46,7 @@ public class Device extends List {
                 ContextUtil.toast(
                     activity.getApplicationContext(),
                     R.string.pref_device_to_pretend_to_be_notice,
-                    PreferenceManager.getDefaultSharedPreferences(activity).getString(PreferenceActivity.PREFERENCE_DOWNLOAD_DIRECTORY, "")
+                    PreferenceManager.getDefaultSharedPreferences(activity).getString(PreferenceUtil.PREFERENCE_DOWNLOAD_DIRECTORY, "")
                 );
                 ((AlertDialog) listPreference.getDialog()).getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
@@ -97,13 +100,13 @@ public class Device extends List {
         return deviceInfoProvider.isValid();
     }
 
-    private AlertDialog showRequestDialog(boolean logOut) {
+    private DialogWrapperAbstract showRequestDialog(boolean logOut) {
         PreferenceManager.getDefaultSharedPreferences(activity)
             .edit()
             .putBoolean(PREFERENCE_DEVICE_DEFINITION_REQUESTED, true)
             .commit()
         ;
-        return new AlertDialog.Builder(activity)
+        return new DialogWrapper(activity)
             .setMessage(R.string.dialog_message_spoof_request)
             .setTitle(R.string.dialog_title_spoof_request)
             .setPositiveButton(android.R.string.yes, new FinishingOnClickListener(logOut) {
@@ -126,8 +129,8 @@ public class Device extends List {
         activity.startService(intentBugReport);
     }
 
-    private AlertDialog showLogOutDialog() {
-        return new AlertDialog.Builder(activity)
+    private DialogWrapperAbstract showLogOutDialog() {
+        return new DialogWrapper(activity)
             .setMessage(R.string.pref_device_to_pretend_to_be_toast)
             .setTitle(R.string.dialog_title_logout)
             .setPositiveButton(android.R.string.yes, new RequestOnClickListener(activity, true))
@@ -148,7 +151,7 @@ public class Device extends List {
         private boolean askedAlready;
 
         public RequestOnClickListener(Activity activity, boolean logOut) {
-            askedAlready = PreferenceActivity.getBoolean(activity, PREFERENCE_DEVICE_DEFINITION_REQUESTED);
+            askedAlready = PreferenceUtil.getBoolean(activity, PREFERENCE_DEVICE_DEFINITION_REQUESTED);
             this.logOut = logOut;
         }
 

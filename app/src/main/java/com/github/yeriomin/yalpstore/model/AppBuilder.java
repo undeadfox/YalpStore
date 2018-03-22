@@ -4,8 +4,11 @@ import android.text.TextUtils;
 
 import com.github.yeriomin.playstoreapi.AggregateRating;
 import com.github.yeriomin.playstoreapi.AppDetails;
+import com.github.yeriomin.playstoreapi.Badge;
 import com.github.yeriomin.playstoreapi.Dependency;
+import com.github.yeriomin.playstoreapi.DetailsResponse;
 import com.github.yeriomin.playstoreapi.DocV2;
+import com.github.yeriomin.playstoreapi.GooglePlayAPI;
 import com.github.yeriomin.playstoreapi.Image;
 import com.github.yeriomin.playstoreapi.RelatedLink;
 import com.github.yeriomin.playstoreapi.Unknown25Item;
@@ -17,14 +20,22 @@ import java.util.regex.Pattern;
 
 public class AppBuilder {
 
-    private static final int IMAGE_ICON = 4;
-    private static final int IMAGE_VIDEO = 3;
-    private static final int IMAGE_SCREENSHOT = 1;
+    static public App build(DetailsResponse detailsResponse) {
+        App app = build(detailsResponse.getDocV2());
+        if (TextUtils.isEmpty(app.getCategoryIconUrl()) || app.getRelatedLinks().isEmpty()) {
+            walkBadges(app, detailsResponse.getBadgeList());
+        }
+        if (detailsResponse.hasUserReview()) {
+            app.setUserReview(ReviewBuilder.build(detailsResponse.getUserReview()));
+        }
+        return app;
+    }
 
     static public App build(DocV2 details) {
         App app = new App();
         app.setDisplayName(details.getTitle());
         app.setDescription(details.getDescriptionHtml());
+        app.setShortDescription(details.getDescriptionShort());
         app.setCategoryId(details.getRelatedLinks().getCategoryInfo().getAppCategory());
         app.setRestriction(details.getAvailability().getRestriction());
         if (details.getOfferCount() > 0) {
@@ -49,6 +60,7 @@ public class AppBuilder {
         app.setInPlayStore(true);
         app.setEarlyAccess(appDetails.hasEarlyAccessInfo());
         app.setTestingProgramAvailable(appDetails.hasTestingProgramInfo());
+        app.setAd(details.getDetailsUrl().contains("nocache_isad=1"));
         if (app.isTestingProgramAvailable()) {
             app.setTestingProgramOptedIn(appDetails.getTestingProgramInfo().hasSubscribed() && appDetails.getTestingProgramInfo().getSubscribed());
             app.setTestingProgramEmail(appDetails.getTestingProgramInfo().getTestingProgramEmail());
@@ -111,13 +123,50 @@ public class AppBuilder {
 
     static private void fillImages(App app, List<Image> images) {
         for (Image image: images) {
-            if (image.getImageType() == IMAGE_ICON) {
-                app.setIconUrl(image.getImageUrl());
-            } else if (image.getImageType() == IMAGE_VIDEO) {
-                app.setVideoUrl(image.getImageUrl());
-            } else if (image.getImageType() == IMAGE_SCREENSHOT) {
-                app.getScreenshotUrls().add(image.getImageUrl());
+            switch (image.getImageType()) {
+                case GooglePlayAPI.IMAGE_TYPE_CATEGORY_ICON:
+                    app.setCategoryIconUrl(image.getImageUrl());
+                    break;
+                case GooglePlayAPI.IMAGE_TYPE_APP_ICON:
+                    app.setIconUrl(image.getImageUrl());
+                    break;
+                case GooglePlayAPI.IMAGE_TYPE_YOUTUBE_VIDEO_LINK:
+                    app.setVideoUrl(image.getImageUrl());
+                    break;
+                case GooglePlayAPI.IMAGE_TYPE_PLAY_STORE_PAGE_BACKGROUND:
+                    app.setPageBackgroundImage(new ImageSource(image.getImageUrl()).setFullSize(true));
+                    break;
+                case GooglePlayAPI.IMAGE_TYPE_APP_SCREENSHOT:
+                    app.getScreenshotUrls().add(image.getImageUrl());
+                    break;
             }
         }
+    }
+
+    static private void walkBadges(App app, List<Badge> badges) {
+        for (Badge badge: badges) {
+            String link = getLink(badge);
+            if (TextUtils.isEmpty(link)) {
+                continue;
+            }
+            if (app.getRelatedLinks().isEmpty() && link.startsWith("browse")) {
+                // That's similar apps
+                app.getRelatedLinks().put(badge.getLabel(), link);
+            } else if (link.startsWith("homeV2?cat=")) {
+                // That's category badge
+                app.setCategoryIconUrl(badge.getImage().getImageUrl());
+            }
+        }
+    }
+
+    static private String getLink(Badge badge) {
+        if (null != badge
+            && badge.hasBadgeContainer1()
+            && badge.getBadgeContainer1().hasBadgeContainer2()
+            && badge.getBadgeContainer1().getBadgeContainer2().hasBadgeLinkContainer()
+        ) {
+            return badge.getBadgeContainer1().getBadgeContainer2().getBadgeLinkContainer().getLink();
+        }
+        return null;
     }
 }
