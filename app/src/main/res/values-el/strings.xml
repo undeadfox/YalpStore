@@ -150,7 +150,7 @@
 <string name="pref_category_installation">"Εγκατάσταση"</string>
 <string name="pref_category_spoofing">"Πλαστογράφηση"</string>
 <string name="pref_category_ui">"Διεπαφή του χρήστη"</string>
-<string name="details_installing">"Γίνεται εγκατάσταση..."</string>
+<string name="details_installing">"Γίνεται εγκατάσταση…"</string>
 <string name="details_installed">"Εγκαταστάθηκε επιτυχώς"</string>
 <string name="details_install_failure">"Δεν μπόρεσε να γίνει εγκατάσταση"</string>
 <string name="notification_download_complete_new_permissions">"Ολοκληρώθηκε η λήψη. Αίτηση νέων δικαιωμάτων."</string>
@@ -227,7 +227,7 @@
 <string name="bug_report_explanation_crash">"Μπορείς να βοηθήσεις στο να το διορθώσουμε αυτό, στέλνοντας μία αναφορά δυσλειτουργίας στον προγραμματιστή. Παρακαλώ, περιέγραψε αυτό που προσπαθούσες να κάνεις, όταν συνέβη το σφάλμα, και άγγιξε στο Εντάξει, για να το στείλεις."</string>
 <string name="bug_report_explanation_bug_report">"Παρακαλώ περιέγραψε το πρόβλημα. Δώσε όσο γίνεται περισσότερες λεπτομέρειες. Μήπως το πρόβλημα συμβαίνει με κάποια συγκεκριμένη εφαρμογή; Μήπως συμβαίνει πάντοτε, ή μήπως μόνο μερικές φορές; Πώς μπορεί να αναπαραχθεί;"</string>
 <string name="thank_you">"Σε ευχαριστούμε"</string>
-<string name="list_updating">"Γίνεται ενημέρωση..."</string>
+<string name="list_updating">"Γίνεται ενημέρωση…"</string>
 <string name="error_invalid_device_definition">"Ο προσδιορισμός της συσκευής απορρίφθηκε."</string>
 <string name="details_video">"Βίντεο"</string>
 <string name="error_could_not_download">"Δεν μπόρεσε να γίνει η λήψη."</string>
@@ -242,7 +242,6 @@
 <string name="testing_program_section_opted_out_propagating_message">"Μπορεί να χρειαστούν μερικά λεπτά για την απομάκρυνσή σου από το πρόγραμμα beta."</string>
 <string name="testing_program_section_opted_out_title">"Γίνε δοκιμαστής της beta"</string>
 <string name="notification_not_privileged">"Δεν έχουν παραχωρηθεί δικαιώματα εγκατάστασης"</string>
-<string name="about_paypal_label">"Δωρεά με Πέυπάλ:"</string>
 <string name="pref_download_directory">"Κατάλογος λήψεων"</string>
 <string name="pref_download_deltas">"Ενημερώσεις Δέλτα"</string>
 <string name="pref_download_deltas_summary_off">"Το πλήρες apk λαμβάνεται την κάθε φορά"</string>
