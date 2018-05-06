@@ -19,10 +19,8 @@
 
 package com.github.yeriomin.yalpstore.fragment.details;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,16 +29,16 @@ import android.view.ViewStub;
 
 import com.github.yeriomin.yalpstore.BlackWhiteListManager;
 import com.github.yeriomin.yalpstore.BuildConfig;
-import com.github.yeriomin.yalpstore.ContextUtil;
-import com.github.yeriomin.yalpstore.InstalledApkCopier;
 import com.github.yeriomin.yalpstore.LocalWishlist;
 import com.github.yeriomin.yalpstore.ManualDownloadActivity;
 import com.github.yeriomin.yalpstore.R;
+import com.github.yeriomin.yalpstore.VersionIgnoreManager;
 import com.github.yeriomin.yalpstore.YalpStoreActivity;
 import com.github.yeriomin.yalpstore.model.App;
 import com.github.yeriomin.yalpstore.task.CheckShellTask;
 import com.github.yeriomin.yalpstore.task.ConvertToNormalTask;
 import com.github.yeriomin.yalpstore.task.ConvertToSystemTask;
+import com.github.yeriomin.yalpstore.task.CopyApkTask;
 import com.github.yeriomin.yalpstore.task.SystemRemountTask;
 import com.github.yeriomin.yalpstore.task.playstore.WishlistToggleTask;
 import com.github.yeriomin.yalpstore.view.FlagDialogBuilder;
@@ -87,6 +85,10 @@ public class DownloadOptions extends Abstract {
             }
             setChecked(menu, R.id.action_ignore, isContained);
             setChecked(menu, R.id.action_whitelist, isContained);
+            if (app.getVersionCode() > app.getInstalledVersionCode()) {
+                show(menu, R.id.action_ignore_this, true);
+                setChecked(menu, R.id.action_ignore_this, !new VersionIgnoreManager(activity).isUpdatable(app.getPackageName(), app.getVersionCode()));
+            }
             if (isConvertible(app)) {
                 show(menu, R.id.action_make_system, !app.isSystem());
                 show(menu, R.id.action_make_normal, app.isSystem());
@@ -127,7 +129,7 @@ public class DownloadOptions extends Abstract {
                 activity.startActivity(new Intent(activity, ManualDownloadActivity.class));
                 return true;
             case R.id.action_get_local_apk:
-                new CopyTask(activity).execute(app);
+                new CopyApkTask(activity).execute(app);
                 return true;
             case R.id.action_make_system:
                 checkAndExecute(new ConvertToSystemTask(activity, app));
@@ -144,6 +146,14 @@ public class DownloadOptions extends Abstract {
                 task.setContext(activity);
                 task.setPackageName(app.getPackageName());
                 task.execute();
+                return true;
+            case R.id.action_ignore_this:
+                if (item.isChecked()) {
+                    new VersionIgnoreManager(activity).remove(app.getPackageName(), app.getVersionCode());
+                } else {
+                    new VersionIgnoreManager(activity).add(app.getPackageName(), app.getVersionCode());
+                }
+                item.setChecked(!item.isChecked());
                 return true;
         }
         return false;
@@ -170,33 +180,6 @@ public class DownloadOptions extends Abstract {
             return true;
         } catch (PackageManager.NameNotFoundException e) {
             return false;
-        }
-    }
-
-    static class CopyTask extends AsyncTask<App, Void, Boolean> {
-
-        private Activity activity;
-        private App app;
-
-        public CopyTask(Activity activity) {
-            this.activity = activity;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            ContextUtil.toastLong(
-                activity.getApplicationContext(),
-                activity.getString(result
-                    ? R.string.details_saved_in_downloads
-                    : R.string.details_could_not_copy_apk
-                )
-            );
-        }
-
-        @Override
-        protected Boolean doInBackground(App... apps) {
-            app = apps[0];
-            return InstalledApkCopier.copy(activity, app);
         }
     }
 }
