@@ -19,36 +19,36 @@
 
 package com.github.yeriomin.yalpstore.task;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.github.yeriomin.yalpstore.BuildConfig;
-import com.github.yeriomin.yalpstore.InstallerAbstract;
-import com.github.yeriomin.yalpstore.InstallerFactory;
-import com.github.yeriomin.yalpstore.model.App;
+import java.io.IOException;
 
-import java.util.List;
+import javax.net.ssl.HttpsURLConnection;
 
-import eu.chainfire.libsuperuser.Shell;
+import info.guardianproject.netcipher.NetCipher;
+import info.guardianproject.netcipher.client.StrongConnectionBuilder;
 
-public class InstallTask extends AsyncTask<Void, Void, Void> {
+abstract public class HttpTask extends AsyncTask<Void, Void, String> {
 
-    private App app;
-    private InstallerAbstract installer;
+    private String url;
+    protected int returnCode;
+    protected String response;
 
-    public InstallTask(Context context, App app) {
-        this(InstallerFactory.get(context), app);
-    }
-
-    public InstallTask(InstallerAbstract installer, App app) {
-        this.installer = installer;
-        this.app = app;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override
-    protected Void doInBackground(Void... voids) {
-        installer.verifyAndInstall(app);
-        return null;
+    protected String doInBackground(Void... voids) {
+        try {
+            HttpsURLConnection connection = NetCipher.getHttpsURLConnection(url);
+            connection.setRequestMethod("GET");
+            returnCode = connection.getResponseCode();
+            response = StrongConnectionBuilder.slurp(connection.getInputStream());
+        } catch (IOException e) {
+            Log.e(getClass().getSimpleName(), "Could not get content from " + url + " : " + e.getMessage());
+        }
+        return response;
     }
 }
