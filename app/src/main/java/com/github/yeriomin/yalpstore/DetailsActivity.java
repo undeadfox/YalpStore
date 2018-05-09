@@ -19,6 +19,7 @@
 
 package com.github.yeriomin.yalpstore;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
@@ -37,6 +38,7 @@ import com.github.yeriomin.yalpstore.fragment.details.Beta;
 import com.github.yeriomin.yalpstore.fragment.details.DownloadOptions;
 import com.github.yeriomin.yalpstore.fragment.details.DownloadOrInstall;
 import com.github.yeriomin.yalpstore.fragment.details.Exodus;
+import com.github.yeriomin.yalpstore.fragment.details.Fdroid;
 import com.github.yeriomin.yalpstore.fragment.details.GeneralDetails;
 import com.github.yeriomin.yalpstore.fragment.details.Permissions;
 import com.github.yeriomin.yalpstore.fragment.details.Review;
@@ -60,6 +62,9 @@ public class DetailsActivity extends YalpStoreActivity {
     static public Intent getDetailsIntent(Context context, String packageName) {
         Intent intent = new Intent(context, DetailsActivity.class);
         intent.putExtra(DetailsActivity.INTENT_PACKAGE_NAME, packageName);
+        if (!(context instanceof Activity)) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
         return intent;
     }
 
@@ -180,6 +185,7 @@ public class DetailsActivity extends YalpStoreActivity {
         new Video(this, app).draw();
         new Beta(this, app).draw();
         new Exodus(this, app).draw();
+        new Fdroid(this, app).draw();
         if (null != downloadOrInstallFragment) {
             downloadOrInstallFragment.unregisterReceivers();
         }
