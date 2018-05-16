@@ -52,6 +52,8 @@ import static com.github.yeriomin.yalpstore.PreferenceUtil.PREFERENCE_USE_TOR;
 public class YalpStoreApplication extends Application {
 
     public static final Set<String> fdroidPackageNames = new HashSet<>();
+    public static final SharedPreferencesCachedSet purchasedPackageNames = new SharedPreferencesCachedSet("purchasedPackageNames");
+    public static final SharedPreferencesCachedSet wishlist = new SharedPreferencesCachedSet("wishlist");
 
     private boolean isBackgroundUpdating = false;
     private List<String> pendingUpdates = new ArrayList<>();
@@ -111,6 +113,8 @@ public class YalpStoreApplication extends Application {
         } else {
             new FdroidListTask(this.getApplicationContext()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
+        purchasedPackageNames.setPreferences(PreferenceManager.getDefaultSharedPreferences(this));
+        wishlist.setPreferences(PreferenceManager.getDefaultSharedPreferences(this));
     }
 
     private void registerDownloadReceiver() {
