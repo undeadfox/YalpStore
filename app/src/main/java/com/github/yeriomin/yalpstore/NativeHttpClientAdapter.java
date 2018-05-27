@@ -20,6 +20,7 @@
 package com.github.yeriomin.yalpstore;
 
 import android.content.Context;
+import android.net.TrafficStats;
 import android.net.Uri;
 import android.os.Build;
 import android.text.TextUtils;
@@ -120,6 +121,7 @@ public class NativeHttpClientAdapter extends HttpClientAdapter {
     }
 
     protected HttpURLConnection getHttpURLConnection(String url) throws IOException {
+        TrafficStats.setThreadStatsTag(Thread.currentThread().hashCode());
         return NetCipher.getHttpURLConnection(new URL(url), true);
     }
 
@@ -135,7 +137,14 @@ public class NativeHttpClientAdapter extends HttpClientAdapter {
 
         byte[] content = new byte[0];
         Log.i(getClass().getSimpleName(), "Requesting " + connection.getURL().toString());
-        connection.connect();
+        try {
+            connection.connect();
+        } catch (NullPointerException e) {
+            // This is a known bug in Android 7.0; it was fixed by this change which went into Android 7.1:
+            // https://android-review.googlesource.com/#/c/271775/
+            // https://github.com/square/okhttp/issues/3245
+            throw new IOException(e);
+        }
 
         int code = 0;
         boolean isGzip;

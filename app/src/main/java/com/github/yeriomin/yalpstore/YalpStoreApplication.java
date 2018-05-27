@@ -31,6 +31,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -52,7 +53,6 @@ import static com.github.yeriomin.yalpstore.PreferenceUtil.PREFERENCE_USE_TOR;
 public class YalpStoreApplication extends Application {
 
     public static final Set<String> fdroidPackageNames = new HashSet<>();
-    public static final SharedPreferencesCachedSet purchasedPackageNames = new SharedPreferencesCachedSet("purchasedPackageNames");
     public static final SharedPreferencesCachedSet wishlist = new SharedPreferencesCachedSet("wishlist");
 
     private boolean isBackgroundUpdating = false;
@@ -94,6 +94,10 @@ public class YalpStoreApplication extends Application {
 
     @Override
     public void onCreate() {
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().permitDiskReads().penaltyLog().build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
+        }
         super.onCreate();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             try {
@@ -113,8 +117,7 @@ public class YalpStoreApplication extends Application {
         } else {
             new FdroidListTask(this.getApplicationContext()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
-        purchasedPackageNames.setPreferences(PreferenceManager.getDefaultSharedPreferences(this));
-        wishlist.setPreferences(PreferenceManager.getDefaultSharedPreferences(this));
+        wishlist.setPreferences(PreferenceUtil.getDefaultSharedPreferences(this));
     }
 
     private void registerDownloadReceiver() {
@@ -141,7 +144,7 @@ public class YalpStoreApplication extends Application {
 
     public void initNetcipher() {
         listener = new ProxyOnChangeListener(this);
-        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(listener);
+        PreferenceUtil.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(listener);
         Proxy proxy = PreferenceUtil.getProxy(this);
         if (PreferenceUtil.getBoolean(this, PREFERENCE_USE_TOR)) {
             OrbotHelper.requestStartTor(this);
