@@ -50,6 +50,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import info.guardianproject.netcipher.NetCipher;
 import info.guardianproject.netcipher.proxy.OrbotHelper;
 
+import static com.github.yeriomin.yalpstore.InstalledAppsActivity.INSTALLED_APPS_LOADED_ACTION;
 import static com.github.yeriomin.yalpstore.PreferenceUtil.PREFERENCE_USE_TOR;
 
 public class YalpStoreApplication extends Application {
@@ -98,7 +99,7 @@ public class YalpStoreApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+        if (!BuildConfig.DEBUG && Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
             try {
                 HttpResponseCache.install(new File(getCacheDir(), "http"), 5 * 1024 * 1024);
             } catch (IOException e) {
@@ -147,6 +148,9 @@ public class YalpStoreApplication extends Application {
     }
 
     public void initNetcipher() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.GINGERBREAD) {
+            return;
+        }
         listener = new ProxyOnChangeListener(this);
         PreferenceUtil.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(listener);
         Proxy proxy = PreferenceUtil.getProxy(this);
@@ -208,6 +212,7 @@ public class YalpStoreApplication extends Application {
             apps.get(BuildConfig.APPLICATION_ID).setFree(true);
             YalpStoreApplication.installedPackages.clear();
             YalpStoreApplication.installedPackages.putAll(apps);
+            context.sendBroadcast(new Intent(INSTALLED_APPS_LOADED_ACTION));
         }
     }
 }
