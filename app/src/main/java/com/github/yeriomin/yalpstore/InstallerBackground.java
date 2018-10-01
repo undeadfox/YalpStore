@@ -20,6 +20,7 @@
 package com.github.yeriomin.yalpstore;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.github.yeriomin.yalpstore.model.App;
@@ -35,6 +36,12 @@ abstract public class InstallerBackground extends InstallerAbstract {
 
     @Override
     public boolean verify(App app) {
+        new NotificationManagerWrapper(context).show(
+            app.getPackageName(),
+            new Intent(),
+            app.getDisplayName(),
+            context.getString(R.string.details_installing)
+        );
         if (!super.verify(app)) {
             return false;
         }
@@ -53,15 +60,15 @@ abstract public class InstallerBackground extends InstallerAbstract {
             ? (wasInstalled ? R.string.notification_installation_complete : R.string.details_installed)
             : (wasInstalled ? R.string.notification_installation_failed : R.string.details_install_failure)
         );
-        if (background) {
-            new NotificationManagerWrapper(context).show(
-                wasInstalled
-                    ? HistoryActivity.getHistoryIntent(context, app.getPackageName())
-                    : DetailsActivity.getDetailsIntent(context, app.getPackageName()),
-                app.getDisplayName(),
-                resultString
-            );
-        } else {
+        new NotificationManagerWrapper(context).show(
+            app.getPackageName(),
+            wasInstalled
+                ? HistoryActivity.getHistoryIntent(context, app.getPackageName())
+                : DetailsActivity.getDetailsIntent(context, app.getPackageName()),
+            app.getDisplayName(),
+            resultString
+        );
+        if (!background && YalpStoreApplication.isForeground()) {
             ContextUtil.toastLong(context, resultString);
         }
         app.setInstalled(true);
@@ -71,7 +78,8 @@ abstract public class InstallerBackground extends InstallerAbstract {
         notifyAndToast(
             R.string.notification_download_complete_new_permissions,
             R.string.notification_download_complete_new_permissions_toast,
-            app
+            app,
+            true
         );
     }
 }

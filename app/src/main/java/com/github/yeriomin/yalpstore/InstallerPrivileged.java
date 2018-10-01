@@ -95,15 +95,10 @@ abstract public class InstallerPrivileged extends InstallerBackground {
         }
         if (context.getPackageManager().checkPermission(Manifest.permission.INSTALL_PACKAGES, BuildConfig.APPLICATION_ID) != PackageManager.PERMISSION_GRANTED) {
             Log.i(getClass().getSimpleName(), Manifest.permission.INSTALL_PACKAGES + " not granted");
-            notifyAndToast(R.string.notification_not_privileged, R.string.pref_not_privileged, app);
+            notifyAndToast(R.string.notification_not_privileged, R.string.pref_not_privileged, app, false);
             return false;
         }
         return true;
-    }
-
-    @Override
-    protected void install(App app) {
-        InstallationState.setInstalling(app.getPackageName());
     }
 
     protected void processResult(App app, int returnCode) {
@@ -113,9 +108,9 @@ abstract public class InstallerPrivileged extends InstallerBackground {
         if (success) {
             InstallationState.setSuccess(packageName);
         } else {
+            sendFailureBroadcast(packageName);
             InstallationState.setFailure(packageName);
         }
-        sendBroadcast(packageName, success);
         boolean needToLoop = false;
         if (null == Looper.myLooper()) {
             Looper.prepare();
@@ -134,6 +129,6 @@ abstract public class InstallerPrivileged extends InstallerBackground {
         Log.e(getClass().getSimpleName(), "Could not start privileged installation: " + e.getClass().getName() + " " + e.getMessage());
         ((YalpStoreApplication) context.getApplicationContext()).removePendingUpdate(packageName);
         InstallationState.setFailure(packageName);
-        sendBroadcast(packageName, false);
+        sendFailureBroadcast(packageName);
     }
 }
