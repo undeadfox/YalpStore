@@ -26,6 +26,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.github.yeriomin.yalpstore.download.DownloadManager;
+import com.github.yeriomin.yalpstore.install.InstallationState;
 import com.github.yeriomin.yalpstore.model.App;
 import com.github.yeriomin.yalpstore.model.Event;
 import com.github.yeriomin.yalpstore.notification.NotificationManagerWrapper;
@@ -36,6 +37,7 @@ import java.io.File;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.zip.CRC32;
 import java.util.zip.Checksum;
 
@@ -60,7 +62,7 @@ public class GlobalInstallReceiver extends PackageSpecificReceiver {
         packageName = intent.getData().getSchemeSpecificPart();
         Log.i(getClass().getSimpleName(), "Finished installation (" + action + ") of " + packageName);
         try {
-            getEventTask(context, packageName, action).executeOnExecutorIfPossible();
+            getEventTask(context, packageName, action).executeOnExecutorIfPossible().get(5, TimeUnit.SECONDS);
         } catch (Throwable e) {
             // No failure to log an event is important enough to let the app crash
             Log.e(getClass().getSimpleName(), "Could not log event: " + e.getClass().getName() + " " + e.getMessage());

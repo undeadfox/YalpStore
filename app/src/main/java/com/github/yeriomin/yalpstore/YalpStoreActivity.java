@@ -153,12 +153,16 @@ public abstract class YalpStoreActivity extends BaseActivity {
 
     @Override
     protected void fillAccountList(Menu menu, List<LoginInfo> users) {
+        menu.findItem(R.id.action_logout).setVisible(YalpStoreApplication.user.isLoggedIn());
         if (null == users || users.isEmpty()) {
             return;
         }
         Menu accountsMenu = null == menu.findItem(R.id.action_accounts).getSubMenu() ? menu : menu.findItem(R.id.action_accounts).getSubMenu();
         for (LoginInfo info: users) {
-            String userName = TextUtils.isEmpty(info.getUserName()) ? info.getEmail() : info.getUserName();
+            String userName = TextUtils.isEmpty(info.getUserName())
+                ? (info.appProvidedEmail() ? getString(R.string.auth_built_in) : info.getEmail())
+                : info.getUserName()
+            ;
             String deviceDefinitionDisplayName = "";
             if (!TextUtils.isEmpty(info.getDeviceDefinitionName())) {
                 deviceDefinitionDisplayName = getString(R.string.bullet_divider) + info.getDeviceDefinitionDisplayName();
@@ -215,7 +219,7 @@ public abstract class YalpStoreActivity extends BaseActivity {
     }
 
     protected DialogWrapperAbstract showLogOutDialog() {
-        return new DialogWrapper(this)
+        DialogWrapperAbstract dialogWrapper = new DialogWrapper(this)
             .setMessage(R.string.dialog_message_logout)
             .setTitle(R.string.dialog_title_logout)
             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
@@ -226,17 +230,19 @@ public abstract class YalpStoreActivity extends BaseActivity {
                     dialogInterface.dismiss();
                 }
             })
-            .setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int which) {
+            .setNegativeButton(android.R.string.cancel, null)
+        ;
+        if (!YalpStoreApplication.user.appProvidedEmail() || !TextUtils.isEmpty(YalpStoreApplication.user.getDeviceDefinitionName())) {
+            dialogWrapper.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int which) {
                     new PlayStoreApiAuthenticator(getApplicationContext()).logout(true);
                     redrawAccounts();
                     dialogInterface.dismiss();
                 }
-            })
-            .setNegativeButton(android.R.string.cancel, null)
-            .show()
-        ;
+            });
+        }
+        return dialogWrapper.show();
     }
 
     private DialogWrapperAbstract showFallbackSearchDialog() {
