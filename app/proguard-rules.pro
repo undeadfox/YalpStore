@@ -27,7 +27,7 @@
 -keep public class com.github.yeriomin.yalpstore.install.InstallerPrivilegedReflection$* { *; }
 -optimizations !code/simplification/arithmetic,!field/*,!class/merging/*,!code/allocation/variable
 -dontwarn sun.misc.Unsafe
--optimizationpasses 5
+-optimizationpasses 2
 -allowaccessmodification
 -dontskipnonpubliclibraryclasses
 -renamesourcefileattribute SourceFile
