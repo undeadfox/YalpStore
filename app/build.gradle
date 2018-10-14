@@ -1,8 +1,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
 
     def getCurrentFlavor = { ->
         if (getGradle().getStartParameter().getTaskRequests().toString().contains("legacy")) {
@@ -27,8 +27,8 @@ android {
     defaultConfig {
         applicationId "com.github.yeriomin.yalpstore"
         minSdkVersion 5
-        targetSdkVersion 27
-        versionCode 43
+        targetSdkVersion 28
+        versionCode 44
         versionName getVersionName()
         vectorDrawables.useSupportLibrary = true
         resConfigs "ar", "ast", "bg", "cs", "de", "el", "en", "es", "eu", "fr", "fr-rBE", "in", "it", "ja", "kk", "ko", "nl", "pl", "pt", "pt-rBR", "ru", "sk", "uk", "zh", "zh-rTW"
@@ -66,8 +66,8 @@ android {
 }
 
 dependencies {
-    contemporaryImplementation 'com.android.support:design:27.+'
-    contemporaryImplementation 'com.android.support:appcompat-v7:27.+'
+    contemporaryImplementation 'com.android.support:design:28.+'
+    contemporaryImplementation 'com.android.support:appcompat-v7:28.+'
     implementation 'info.guardianproject.netcipher:netcipher:2.0.0-beta1'
     implementation 'commons-net:commons-net:3.5'
     implementation 'com.nothome:javaxdelta:2.0.1'
