@@ -305,5 +305,21 @@ Vykonať?"</string>
 <string name="pref_exodus_summary_off">"Zobrazuje sa odkaz na Exodus report"</string>
 <string name="details_to_fdroid">"Zobraziť v F-Droide"</string>
 <string name="details_instant_app">"Okamžitá aplikácia"</string>
+
+
 <string name="details_new_permission">"Nové:"</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<string name="action_history">"história"</string>
 </resources>

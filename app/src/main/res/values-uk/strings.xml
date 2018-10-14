@@ -306,5 +306,21 @@ Do it?"</string>
 
 
 <string name="details_instant_app">"Додаток із миттєвим запуском"</string>
+
+
 <string name="details_new_permission">"Нові:"</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<string name="action_history">"історія"</string>
 </resources>

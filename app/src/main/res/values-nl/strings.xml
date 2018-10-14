@@ -307,5 +307,23 @@ Nu doen?"</string>
 <string name="pref_exodus_summary_off">"Exodus rapportagelink is weergegeven"</string>
 <string name="details_to_fdroid">"Bekijk in F-Droid"</string>
 <string name="details_instant_app">"Instant-app"</string>
+
+<!-- Fuzzy -->
+<string name="details_exodus_submitting">"Aan het insturen"</string>
+<string name="details_exodus_view">"rapport inzien"</string>
 <string name="details_new_permission">"Nieuw:"</string>
+<string name="list_empty_history">"Nog geen geschiedenis"</string>
+<string name="action_history">"Geschiedenis"</string>
+<string name="dialog_message_virustotal_warning">"%1$d van de %2$d VirusTotal engines beschouwen deze apk als verdacht"</string>
+<string name="dialog_button_virustotal_view_report">"Rapport inzien"</string>
+<string name="events_no_changes">"Geen veranderingen aangegeven door de app ontwikkelaar"</string>
+<string name="uninstalled">"Gedeïnstalleerd"</string>
+<string name="updated_from_to">"Bijgewerkt: %1$s (%2$d) → %3$s (%4$d)"</string>
+
+
+
+
+
+
+<string name="details_download">"Downloaden"</string>
 </resources>

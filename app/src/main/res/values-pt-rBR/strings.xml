@@ -76,7 +76,7 @@ Lembre-se de que usar este aplicativo viola o Play Store ToS. Seria provavelment
 <string name="pref_auto_install">"Instalar apps imediatamente"</string>
 <string name="pref_update_list_white_or_black_black">"Aplicativos selecionados serão ignorados ao verificar atualizações"</string>
 <string name="pref_update_list_white_or_black_white">"Apenas as aplicações selecionadas serão verificadas para atualizações"</string>
-<string name="pref_update_list_white_or_black">"Lista preta ou branca de aplicativos para atualização"</string>
+<string name="pref_update_list_white_or_black">"Lista negra ou branca de aplicativos para atualização"</string>
 <string name="pref_update_list_black">"Alterar lista negra de apps"</string>
 <string name="pref_update_list_white">"Alterar lista branca de apps"</string>
 <string name="pref_ui_theme">"Tema"</string>
@@ -282,30 +282,48 @@ Fazer?"</string>
 <string name="pref_message_fallback">"Tentativa de definir um diretório de retorno (%1$s)?"</string>
 <string name="no_permissions">"Nenhuma permissão utilizada."</string>
 <string name="about_librepay_label">"Donate Librepay:"</string>
-
-
-
-
+<string name="notification_file_verification_failed">"O arquivo parece estar corrompido. Tente baixar novamente."</string>
+<string name="pref_download_internal_storage">"Baixar para armazenamento interno"</string>
+<string name="pref_download_internal_storage_summary_on">"Mais seguro, mas os apks não são acessíveis"</string>
+<string name="pref_download_internal_storage_summary_off">"Aplicativos são baixados para o caminho de armazenamento externo fornecido abaixo"</string>
 <string name="pref_use_tor">"Usar o Tor"</string>
 <string name="pref_use_tor_summary">"Forçar tráfego de download através do Tor para maior privacidade. Exige Orbot"</string>
 
-
-
-
-
-
-
-
+<string name="pref_proxy_enable">"Habilitar proxy"</string>
+<string name="pref_proxy_type">"Tipo de proxy"</string>
+<string name="pref_proxy_host">"Servidor proxy"</string>
+<string name="pref_proxy_port">"Porta proxy"</string>
+<string name="action_wishlist_remove">"Remover da lista branca"</string>
+<string name="action_wishlist_add">"Adicionar na lista branca"</string>
+<string name="action_wishlist">"Lista branca"</string>
 <string name="action_ignore_this">"Ignorar esta atualização"</string>
-
-
-
-
-
-
-
-
-
-
+<string name="details_exodus">"Privacidade Exodus: %1$s"</string>
+<string name="details_exodus_tap_to_check">"toque para verificar"</string>
+<string name="details_exodus_searching">"procurando"</string>
+<string name="details_exodus_not_found">"não encontrado"</string>
+<string name="details_exodus_found">"%1$s rastreadores"</string>
+<string name="pref_category_third_party">"Serviços de terceiros"</string>
+<string name="pref_exodus">"Verificação de privacidade Exodus"</string>
+<string name="pref_exodus_summary_on">"A contagem do rastreador é exibida na página de detalhes automaticamente"</string>
+<string name="pref_exodus_summary_off">"Link do relatório é exibido"</string>
+<string name="details_to_fdroid">"Ver no F-Droid"</string>
+<string name="details_instant_app">"App instantâneo"</string>
+<string name="details_exodus_submitting">"enviando"</string>
+<string name="details_exodus_view">"Visualizar relatório"</string>
 <string name="details_new_permission">"Novo:"</string>
+<string name="list_empty_history">"Não há historico"</string>
+<string name="action_history">"Histórico"</string>
+<string name="dialog_message_virustotal_warning">"%1$d de %2$d motores do VirusTotal consideram este apk suspeito"</string>
+<string name="dialog_button_virustotal_view_report">"Visualizar relatório"</string>
+<string name="events_no_changes">"Nenhuma alteração informada pelo desenvolvedor"</string>
+<string name="uninstalled">"Desinstalado"</string>
+<string name="updated_from_to">"Atualizado: %1$s (%2$d) → %3$s (%4$d)"</string>
+<string name="action_new_account">"Nova conta"</string>
+<string name="action_accounts">"Contas"</string>
+
+<string name="download_manager_SPLITS_NOT_SUPPORTED">"O apk é dividido. Escolha o método de instalação root ou privilegiado."</string>
+<string name="auth_empty">"não logado"</string>
+<string name="auth_built_in">"Conta interna "</string>
+<string name="pref_ui_theme_dark">"Escuro"</string>
+<string name="pref_ui_theme_light">"Claro"</string>
 </resources>

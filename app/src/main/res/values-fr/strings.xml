@@ -265,22 +265,37 @@
 
 <string name="pref_proxy_enable">"Activer le proxy"</string>
 <string name="pref_proxy_type">"Type de proxy"</string>
-
-
+<string name="pref_proxy_host">"Nom d'hôte du proxy"</string>
+<string name="pref_proxy_port">"Port du proxy"</string>
 <string name="action_wishlist_remove">"Supprimer de liste de souhaits"</string>
 <string name="action_wishlist_add">"Ajouter à la liste de souhaits"</string>
 <string name="action_wishlist">"Liste de souhaits"</string>
 <string name="action_ignore_this">"Ignorer cette mise à jour"</string>
 <string name="details_exodus">"Exodus Privacy : %1$s"</string>
-
+<string name="details_exodus_tap_to_check">"toucher pour activer "</string>
 <string name="details_exodus_searching">"recherche"</string>
 <string name="details_exodus_not_found">"non trouvé"</string>
 
 <string name="pref_category_third_party">"Services tiers"</string>
-
-
-
+<string name="pref_exodus">"Examiner avec Exodus Privacy"</string>
+<string name="pref_exodus_summary_on">"Le nombre de traqueur est affiché dans les détails"</string>
+<string name="pref_exodus_summary_off">"Le lien du rapport Exodus est affiché"</string>
 <string name="details_to_fdroid">"Voir dans F-Droid"</string>
 <string name="details_instant_app">"Appli instantanée"</string>
+<string name="details_exodus_submitting">"envoi en cours"</string>
+<string name="details_exodus_view">"voir le rapport"</string>
 <string name="details_new_permission">"Nouveauté :"</string>
+<string name="list_empty_history">"Pas d'historique pour l'instant"</string>
+<string name="action_history">"Historique"</string>
+<string name="dialog_message_virustotal_warning">"%1$d des %2$d moteurs VirusTotal considèrent cet apk suspect"</string>
+<string name="dialog_button_virustotal_view_report">"Voir le rapport"</string>
+<string name="events_no_changes">"Aucun changement mentionné par le développeur"</string>
+<string name="uninstalled">"Désinstallé"</string>
+<string name="updated_from_to">"Mis à jour: %1$s (%2$d) → %3$s (%4$d)"</string>
+
+
+
+
+
+
 </resources>

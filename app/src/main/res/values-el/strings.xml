@@ -301,16 +301,32 @@
 <string name="action_wishlist_add">"Προσθήκη στη λίστα επιθυμητών"</string>
 <string name="action_wishlist">"Λίστα επιθυμιών"</string>
 <string name="action_ignore_this">"Αγνόησε αυτή την ενημέρωση"</string>
-
-
-
-
-
-
-
-
-
-
+<string name="details_exodus">"Απόρρητο Έξοντους: %1$s"</string>
+<string name="details_exodus_tap_to_check">"πίεσε για έλεγχο"</string>
+<string name="details_exodus_searching">"γίνεται αναζήτηση"</string>
+<string name="details_exodus_not_found">"δεν βρέθηκε"</string>
+<string name="details_exodus_found">"%1$s ινχηλάτες"</string>
+<string name="pref_category_third_party">"Υπηρεσίες τρίτων"</string>
+<string name="pref_exodus">"Έλεγχος Απορρήτου Exodus"</string>
+<string name="pref_exodus_summary_on">"Η καταμέτρηση των ιχνηλατών προβάλλεται, αυτόματα, στη σελίδα των λεπτομερειών"</string>
+<string name="pref_exodus_summary_off">"Προβάλλεται ο δεσμός αναφοράς του Έξοντους"</string>
+<string name="details_to_fdroid">"Προβολή στο F-Droid"</string>
 <string name="details_instant_app">"Instant Εφαρμογή"</string>
+
+
 <string name="details_new_permission">"Νέα:"</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<string name="action_history">"ιστορικό"</string>
 </resources>

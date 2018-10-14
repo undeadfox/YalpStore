@@ -281,13 +281,13 @@ El proceso de conversión es imperfecto y específico para cada marca, así que 
 <string name="no_permissions">"No se usan permisos."</string>
 
 
-
-
+<string name="pref_download_internal_storage">"Descargar a almacenamiento interno"</string>
+<string name="pref_download_internal_storage_summary_on">"Más seguro, pero los apk no serán accesibles por el usuario"</string>
 
 <string name="pref_use_tor">"Usar Tor"</string>
 <string name="pref_use_tor_summary">"Forzar el tráfico de descarga a través de Tor para mejorar la privacidad. Requiere Orbot"</string>
 
-
+<string name="pref_proxy_enable">"Habilitar proxy"</string>
 
 
 
@@ -298,13 +298,29 @@ El proceso de conversión es imperfecto y específico para cada marca, así que 
 
 
 
+<string name="details_exodus_not_found">"no encontrado"</string>
 
 
+<string name="pref_exodus">"Chequeo de privacidad en Exodus"</string>
 
 
-
-
-
+<string name="details_to_fdroid">"Ver en F-Droid"</string>
 <string name="details_instant_app">"Aplicación instantánea"</string>
+
+
 <string name="details_new_permission">"Nuevos:"</string>
+
+
+
+
+
+<string name="uninstalled">"Desinstalado"</string>
+<string name="updated_from_to">"Actualizado: %1$s (%2$d) → %3$s (%4$d)"</string>
+
+
+
+
+
+
+<string name="action_history">"historial"</string>
 </resources>

@@ -202,6 +202,7 @@ public abstract class YalpStoreActivity extends BaseActivity {
         new PlayStoreApiAuthenticator(this).logout();
         YalpStoreApplication.user = loginInfo;
         PreferenceUtil.getDefaultSharedPreferences(this).edit().putInt(PREFERENCE_USER_ID, YalpStoreApplication.user.hashCode()).commit();
+        ((YalpStoreApplication) getApplicationContext()).initHttpCache();
         redrawAccounts();
         return true;
     }

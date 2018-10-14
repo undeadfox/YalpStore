@@ -304,5 +304,21 @@ Play 스토어 웹사이트로 이동할까요?"</string>
 
 
 <string name="details_instant_app">"빠른 실행 앱"</string>
+
+
 <string name="details_new_permission">"새 권한:"</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<string name="action_history">"기록"</string>
 </resources>

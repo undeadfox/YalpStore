@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <string name="about_developer_email_label">"بريد المطور:"</string>
+
+<!-- English -->
+<!-- Fuzzy -->
 <string name="about_logged_in">"أنت الآن مسجل دخول ك:"</string>
 <string name="about_copied_to_clipboard">"تم النسخ للحافظة"</string>
 <string name="list_line_2_updatable">"تم التحديث في %1$s"</string>
@@ -8,9 +11,16 @@
 <string name="list_empty_search">"لا توجد تطبيقات"</string>
 <string name="list_incompatible">"غير متوافق"</string>
 <string name="action_about">"حول"</string>
+
+<!-- English -->
+<!-- Fuzzy -->
 <string name="action_settings">"الإعدادات"</string>
 <string name="action_logout">"تسجيل الخروج"</string>
+
+<!-- English -->
 <string name="action_search">"بحث"</string>
+
+<!-- Fuzzy -->
 <string name="action_updates">"تحديثات"</string>
 <string name="action_ignore">"تجاهل التحديثات"</string>
 <string name="action_whitelist">"القائمة البيضاء للتحديثات"</string>
@@ -301,5 +311,21 @@
 
 
 <string name="details_instant_app">"تطبيق فوري"</string>
+
+
 <string name="details_new_permission">"جديد :"</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<string name="action_history">"السجلّ"</string>
 </resources>
