@@ -52,7 +52,11 @@ public class AppListIterator implements Iterator {
     public List<App> next() {
         List<App> apps = new ArrayList<>();
         for (DocV2 details: iterator.next()) {
-            addApp(apps, AppBuilder.build(details));
+            if (details.getDocType() == 1) {
+                addApp(apps, AppBuilder.build(details));
+            } else {
+                continue;
+            }
         }
         return apps;
     }
