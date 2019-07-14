@@ -71,6 +71,6 @@ dependencies {
     implementation 'info.guardianproject.netcipher:netcipher:2.0.0-beta1'
     implementation 'commons-net:commons-net:3.5'
     implementation 'com.nothome:javaxdelta:2.0.1'
-    implementation ('com.github.yeriomin:play-store-api:-SNAPSHOT') { changing = true }
+    implementation 'com.github.kiliakin:play-store-api:0.50'
     implementation 'eu.chainfire:libsuperuser:1.0.0.201608240809'
 }
